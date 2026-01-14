@@ -1,0 +1,6 @@
+/Users/andreisartin/RiderProjects/CarPark/CarPark/bin/Debug/CarPark.exe
+/Users/andreisartin/RiderProjects/CarPark/CarPark/bin/Debug/CarPark.pdb
+/Users/andreisartin/RiderProjects/CarPark/CarPark/obj/Debug/CarPark.csproj.AssemblyReference.cache
+/Users/andreisartin/RiderProjects/CarPark/CarPark/obj/Debug/CarPark.csproj.CoreCompileInputs.cache
+/Users/andreisartin/RiderProjects/CarPark/CarPark/obj/Debug/CarPark.exe
+/Users/andreisartin/RiderProjects/CarPark/CarPark/obj/Debug/CarPark.pdb
