@@ -1,0 +1,6 @@
+/Users/andreisartin/RiderProjects/LearningConsoleProject/LearningConsoleProject/bin/Debug/LearningConsoleProject.exe
+/Users/andreisartin/RiderProjects/LearningConsoleProject/LearningConsoleProject/bin/Debug/LearningConsoleProject.pdb
+/Users/andreisartin/RiderProjects/LearningConsoleProject/LearningConsoleProject/obj/Debug/LearningConsoleProject.csproj.AssemblyReference.cache
+/Users/andreisartin/RiderProjects/LearningConsoleProject/LearningConsoleProject/obj/Debug/LearningConsoleProject.csproj.CoreCompileInputs.cache
+/Users/andreisartin/RiderProjects/LearningConsoleProject/LearningConsoleProject/obj/Debug/LearningConsoleProject.exe
+/Users/andreisartin/RiderProjects/LearningConsoleProject/LearningConsoleProject/obj/Debug/LearningConsoleProject.pdb
