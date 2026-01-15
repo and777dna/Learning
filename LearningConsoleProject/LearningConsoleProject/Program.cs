@@ -126,6 +126,10 @@ namespace LearningConsoleProject
                     {//
                         //
                     }*/
+                    if (letter == 'a' || letter == 'o' || letter == 'u' || letter == 'e' || letter == 'y')
+                    {
+                        vowels += 1;
+                    }
                 }
                 Console.WriteLine($"Substring: {sub} + {sub.Length}");
             }
