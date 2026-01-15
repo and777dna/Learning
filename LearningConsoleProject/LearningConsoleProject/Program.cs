@@ -131,6 +131,7 @@ namespace LearningConsoleProject
                     {
                         vowels += 1;
                     }
+                    Console.WriteLine("TESTING BRANCH");
                 }
                 Console.WriteLine($"Substring: {sub} + {sub.Length}");
             }
