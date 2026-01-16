@@ -119,6 +119,7 @@ namespace LearningConsoleProject
             string[] subs = words.Split(' ');
             Console.WriteLine("length:" + " " + words.Length);
             var vowels = 0;
+            var wordsVowelsConsonants = "";
             foreach (var sub in subs)
             {
                 foreach (var letter in sub)
@@ -133,10 +134,13 @@ namespace LearningConsoleProject
                     }
                     Console.WriteLine("TESTING BRANCH");
                 }
-                Console.WriteLine($"Substring: {sub} + {sub.Length}");
-            }
-            Console.WriteLine("number of vowels inside all words:" + vowels + "count of words:" + subs.Length + "count of consonants:" + (subs.Length-vowels));
 
+                wordsVowelsConsonants += sub + " vowels: " + vowels + ", consonants: " + (sub.Length - vowels) + '\n';
+                vowels = 0;
+                Console.WriteLine($"Substring: {sub} + {sub.Length}" + sub + " vowels: " + vowels + ", consonants: " + (sub.Length - vowels));
+            }
+            //Console.WriteLine("number of vowels inside all words:" + vowels + "count of words:" + subs.Length + "count of consonants:" + (subs.Length-vowels));
+            Console.WriteLine(wordsVowelsConsonants);
         }
         
         public static void Main(string[] args)
