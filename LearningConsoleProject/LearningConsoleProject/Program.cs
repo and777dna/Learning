@@ -7,6 +7,7 @@ namespace LearningConsoleProject
     {
         static void Calculator() 
         {
+            List<string> historyOfCalculations = new List<string>();
             //Input reader
             //- История вычислений (сохраняй в List)
             //- Сохрани результат в файл JSON
@@ -40,51 +41,72 @@ namespace LearningConsoleProject
                 return numberInt;
             }
 
-            int firstNumberInt = PassArguments();//TODO: to validate if return 0;
-            int secondNumberInt = PassArguments();
-
-            static void PrintHistoryOfOperation()
+            /*int firstNumberInt = PassArguments();//TODO: to validate if return 0;
+            int secondNumberInt = PassArguments();*/
+            
+            void PrintHistoryOfOperation()
             {
-                
+                foreach (var calculation in historyOfCalculations){
+                    Console.WriteLine("calculation: " + calculation);
+                }
+            }
+
+            void AddResultToHistoryOfCalculations(int firstNumberInt, int secondNumberInt, string operation, int result)
+            {
+                historyOfCalculations.Add(firstNumberInt + operation + secondNumberInt + "=" + result);
+            }
+
+            string operationInput()
+            {
+                Console.WriteLine("Enter an operation to execute:");
+                string operation = Console.ReadLine();
+                return operation;
+            }
+
+            int operationProcessing(string operation, int firstNumberInt, int secondNumberInt)
+            {
+                /*Console.WriteLine("Enter an operation to execute:");
+                string operation = Console.ReadLine();*/
+                //int result = firstNumber % secondNumber;
+                var result = 0;
+                switch (operation)
+                {//Числа a/b, операции + - * / %
+                    case "+": Console.WriteLine("result: " + (firstNumberInt + secondNumberInt));
+                        result = firstNumberInt + secondNumberInt;
+                        break;
+                    //return firstNumber + secondNumber;
+                    case "-": result = firstNumberInt - secondNumberInt; break;
+                    case "*": result = firstNumberInt * secondNumberInt; break;
+                    case "/": result = firstNumberInt / secondNumberInt; break;
+                    case "%": result = firstNumberInt % secondNumberInt; break;
+                    default: Console.WriteLine("Invalid operation"); break;//TODO: to fix Exception on something else
+                }
+                return result;
+            }
+
+            string continueCalculations()
+            {
+                Console.WriteLine("to continue with next operation type in 'yes', to cancel execution type in 'no':");
+                string answerFromUser = Console.ReadLine();
+                return answerFromUser;
             }
 
             static void printResultToJSON()
             {
-                
             }
-            
-            /*Console.WriteLine("Enter first number:");
-            string firstNumberCommandLine = Console.ReadLine();//TODO: to validate this
-            int firstNumberInt;// = Int32.Parse(firstNumberCommandLine);
-            
-            if (!String.IsNullOrEmpty(firstNumberCommandLine))
-            {
-                try
-                {
-                    //if (!firstNumberCommandLine.IsNullOrEmpty){}
-                    //if (firstNumberCommandLine != null && firstNumberCommandLine != "") { firstNumberInt = Int32.Parse(firstNumberCommandLine); }
-                    firstNumberInt = Int32.Parse(firstNumberCommandLine);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("type in only integer value");
-                    Console.WriteLine(e);
-                    throw;
-                }
-            }
-            else
-            {
-                return;
-            }*/
-            
-            /*Console.WriteLine("Enter second number:");
-            string secondNumCommandLine = Console.ReadLine();
-            var secondNumberInt = Int32.Parse(secondNumCommandLine);*/
 
-            List<string> historyOfCalculations = new List<string>();
+            void SingleCalculation()
+            {
+                int firstNumberInt = PassArguments();//TODO: to validate if return 0;
+                int secondNumberInt = PassArguments();
+                string operation = operationInput();
+                int result = operationProcessing(operation, firstNumberInt, secondNumberInt);
+                AddResultToHistoryOfCalculations(firstNumberInt, secondNumberInt, operation, result);
+            }
             
             
-            Console.WriteLine("Enter an operation to execute:");
+            
+            /*Console.WriteLine("Enter an operation to execute:");
             string operation = Console.ReadLine();
             //int result = firstNumber % secondNumber;
             var result = 0;
@@ -99,17 +121,37 @@ namespace LearningConsoleProject
                 case "/": result = firstNumberInt / secondNumberInt; break;
                 case "%": result = firstNumberInt % secondNumberInt; break;
                 default: Console.WriteLine("Invalid operation"); break;//TODO: to fix Exception on something else
+            }*/
+            /*string operation = operationInput();
+            int result = operationProcessing(operation);*/
+            //historyOfCalculations.Add(firstNumberInt + operation + secondNumberInt + "=" + result);
+            //AddResultToHistoryOfCalculations(firstNumberInt, secondNumberInt, operation, result);
+            SingleCalculation();
+
+            /*string answerUserToContinueCalculation = continueCalculations();
+            if (answerUserToContinueCalculation == "no")
+            {
+                PrintHistoryOfOperation();
+                //Console.WriteLine("result: " + result);
             }
+            else
+            {
+                SingleCalculation();
+            }*/
+            string answerUserToContinueCalculation = continueCalculations();
+            while (answerUserToContinueCalculation == "yes")
+            {
+                SingleCalculation();
+                answerUserToContinueCalculation = continueCalculations();
+            }
+            PrintHistoryOfOperation();
             
-            
-            historyOfCalculations.Add(firstNumberInt + operation + secondNumberInt + "=" + result);
-            
-            
-            foreach (var calculation in historyOfCalculations){
+            /*PrintHistoryOfOperation();
+            /*foreach (var calculation in historyOfCalculations){
                 Console.WriteLine("calculation: " + calculation);
-            }
+            }#1#
             //Console.WriteLine("historyOfCalculations: " + historyOfCalculations);
-            Console.WriteLine("result: " + result);
+            Console.WriteLine("result: " + result);*/
         }
         
         static void Guessnumber()
