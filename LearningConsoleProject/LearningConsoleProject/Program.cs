@@ -157,17 +157,64 @@ namespace LearningConsoleProject
         static void Guessnumber()
         {
             Random rnd = new Random();
-            List
+            List<string> attempts = new List<string>();
             
-            int number = rnd.Next(1, 101);
-            Console.WriteLine(number);
-            Console.WriteLine("Guess a number:");
+            string ChooseDifficulty()
+            {
+                Console.WriteLine("Enter the level of difficulty(easy, medium. hard):");
+                string difficulty = Console.ReadLine();
+                return difficulty;
+            }
+            
+
+            int NumbersRange(string difficulty)
+            {
+                int number = 0;
+                switch (difficulty)
+                {
+                    case "easy": number = rnd.Next(0, 10); break;
+                    case "medium": number = rnd.Next(0, 100); break;
+                    case "hard": number = rnd.Next(0, 1000); break;
+                }
+                return number;
+            }
+
+            void NumberGuessing(int numberToGuess)
+            {
+                Console.WriteLine("Guess a number:");
+                string numberCLI = Console.ReadLine();
+                var numberCLItoInteger = Int32.Parse(numberCLI);
+                while (numberCLItoInteger != numberToGuess)
+                {
+                    if (numberCLItoInteger > numberToGuess)
+                    {
+                        Console.WriteLine("type in a lesser number:");
+                        numberCLI = Console.ReadLine();
+                        numberCLItoInteger = Int32.Parse(numberCLI);
+                    }
+                    if (numberCLItoInteger < numberToGuess)
+                    {
+                        Console.WriteLine("type in a greater number:");
+                        string NumberCLI = Console.ReadLine();
+                        numberCLItoInteger = Int32.Parse(NumberCLI);
+                    }
+                }
+            }
+            
+            string difficulty = ChooseDifficulty();
+            int numberToGuess = NumbersRange(difficulty);
+            NumberGuessing(numberToGuess);
+            
+            Console.WriteLine("you've guessed the number");
+            //int number = rnd.Next(1, 101);
+            //Console.WriteLine(number);
+            //Console.WriteLine("Guess a number:");
             
             //- 3 уровня сложности (простой рандом: числа от 0 до 10, средний от 11 до 100 и т.д.)
             // - Статистика попыток
             // - Лучшие результаты//number of guesses, level of difficulty
             
-            string num = Console.ReadLine();
+            /*string num = Console.ReadLine();
             var nnumber = Int32.Parse(num);
             while (nnumber != number)
             {
@@ -183,12 +230,7 @@ namespace LearningConsoleProject
                     string nnum = Console.ReadLine();
                     nnumber = Int32.Parse(nnum);
                 }
-            }
-            
-            if (nnumber == number)
-            {
-                Console.WriteLine("you guessed a number");
-            }
+            }*/
             
         }
 
