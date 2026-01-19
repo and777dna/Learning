@@ -157,7 +157,7 @@ namespace LearningConsoleProject
         static void Guessnumber()
         {
             Random rnd = new Random();
-            List<string> attempts = new List<string>();
+            List<string> historyOfAttempts = new List<string>();
             
             string ChooseDifficulty()
             {
@@ -166,7 +166,6 @@ namespace LearningConsoleProject
                 return difficulty;
             }
             
-
             int NumbersRange(string difficulty)
             {
                 int number = 0;
@@ -176,16 +175,19 @@ namespace LearningConsoleProject
                     case "medium": number = rnd.Next(0, 100); break;
                     case "hard": number = rnd.Next(0, 1000); break;
                 }
+                Console.WriteLine(number);
                 return number;
             }
 
             void NumberGuessing(int numberToGuess)
             {
+                int counterOfAttempts = 0;
                 Console.WriteLine("Guess a number:");
                 string numberCLI = Console.ReadLine();
                 var numberCLItoInteger = Int32.Parse(numberCLI);
                 while (numberCLItoInteger != numberToGuess)
                 {
+                    counterOfAttempts += 1;
                     if (numberCLItoInteger > numberToGuess)
                     {
                         Console.WriteLine("type in a lesser number:");
@@ -199,13 +201,43 @@ namespace LearningConsoleProject
                         numberCLItoInteger = Int32.Parse(NumberCLI);
                     }
                 }
+                historyOfAttempts.Add("number of guessing" + counterOfAttempts);
+            }
+
+            void SinglePlay()
+            {
+                string difficulty = ChooseDifficulty();
+                int numberToGuess = NumbersRange(difficulty);
+                NumberGuessing(numberToGuess);
+            }
+
+            string PlayAgain()
+            {
+                Console.WriteLine("would you like to play again(yes,no):");
+                string answer = Console.ReadLine();
+                return answer;
             }
             
-            string difficulty = ChooseDifficulty();
-            int numberToGuess = NumbersRange(difficulty);
-            NumberGuessing(numberToGuess);
+            void PrintHistoryOfOperation()
+            {
+                foreach (var attempt in historyOfAttempts){
+                    Console.WriteLine("attempt: " + attempt);
+                }
+            }
             
-            Console.WriteLine("you've guessed the number");
+            /*string difficulty = ChooseDifficulty();
+            int numberToGuess = NumbersRange(difficulty);
+            NumberGuessing(numberToGuess);*/
+            SinglePlay();
+            
+            string answerUserToPlayAgain = PlayAgain();
+            while (answerUserToPlayAgain == "yes")
+            {
+                SinglePlay();
+                answerUserToPlayAgain = PlayAgain();
+            }
+            PrintHistoryOfOperation();
+            
             //int number = rnd.Next(1, 101);
             //Console.WriteLine(number);
             //Console.WriteLine("Guess a number:");
