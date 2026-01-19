@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices.JavaScript;
 
 namespace LearningConsoleProject
 {
@@ -6,13 +7,82 @@ namespace LearningConsoleProject
     {
         static void Calculator() 
         {
-            Console.WriteLine("Enter first number:");
-            string firstNum = Console.ReadLine();
-            var firstNumber = Int32.Parse(firstNum);
+            //Input reader
+            //- История вычислений (сохраняй в List)
+            //- Сохрани результат в файл JSON
+
+            static int PassArguments()
+            {
+                Console.WriteLine("Enter a number:");
+                string numberCommandLine = Console.ReadLine();//TODO: to validate this
+                int numberInt;// = Int32.Parse(firstNumberCommandLine);
             
-            Console.WriteLine("Enter second number:");
-            string secondNum = Console.ReadLine();
-            var secondNumber = Int32.Parse(secondNum);
+                if (!String.IsNullOrEmpty(numberCommandLine))
+                {
+                    try
+                    {
+                        //if (!firstNumberCommandLine.IsNullOrEmpty){}
+                        //if (firstNumberCommandLine != null && firstNumberCommandLine != "") { firstNumberInt = Int32.Parse(firstNumberCommandLine); }
+                        numberInt = Int32.Parse(numberCommandLine);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("type in only integer value");
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                }
+                else
+                {
+                    return 0;
+                }
+
+                return numberInt;
+            }
+
+            int firstNumberInt = PassArguments();//TODO: to validate if return 0;
+            int secondNumberInt = PassArguments();
+
+            static void PrintHistoryOfOperation()
+            {
+                
+            }
+
+            static void printResultToJSON()
+            {
+                
+            }
+            
+            /*Console.WriteLine("Enter first number:");
+            string firstNumberCommandLine = Console.ReadLine();//TODO: to validate this
+            int firstNumberInt;// = Int32.Parse(firstNumberCommandLine);
+            
+            if (!String.IsNullOrEmpty(firstNumberCommandLine))
+            {
+                try
+                {
+                    //if (!firstNumberCommandLine.IsNullOrEmpty){}
+                    //if (firstNumberCommandLine != null && firstNumberCommandLine != "") { firstNumberInt = Int32.Parse(firstNumberCommandLine); }
+                    firstNumberInt = Int32.Parse(firstNumberCommandLine);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("type in only integer value");
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+            else
+            {
+                return;
+            }*/
+            
+            /*Console.WriteLine("Enter second number:");
+            string secondNumCommandLine = Console.ReadLine();
+            var secondNumberInt = Int32.Parse(secondNumCommandLine);*/
+
+            List<string> historyOfCalculations = new List<string>();
+            
             
             Console.WriteLine("Enter an operation to execute:");
             string operation = Console.ReadLine();
@@ -20,18 +90,26 @@ namespace LearningConsoleProject
             var result = 0;
             switch (operation)
             {//Числа a/b, операции + - * / %
-                case "+": Console.WriteLine("result: " + firstNumber + secondNumber);
-                    result = firstNumber + secondNumber;
+                case "+": Console.WriteLine("result: " + (firstNumberInt + secondNumberInt));
+                    result = firstNumberInt + secondNumberInt;
                     break;
                 //return firstNumber + secondNumber;
-                case "-": result = firstNumber - secondNumber; break;
-                case "*": result = firstNumber * secondNumber; break;
-                case "/": result = firstNumber / secondNumber; break;
-                case "%": result = firstNumber % secondNumber; break;
-                default: throw new Exception("invalid logic");
+                case "-": result = firstNumberInt - secondNumberInt; break;
+                case "*": result = firstNumberInt * secondNumberInt; break;
+                case "/": result = firstNumberInt / secondNumberInt; break;
+                case "%": result = firstNumberInt % secondNumberInt; break;
+                default: Console.WriteLine("Invalid operation"); break;//TODO: to fix Exception on something else
             }
-
-            Console.WriteLine(result);
+            
+            
+            historyOfCalculations.Add(firstNumberInt + operation + secondNumberInt + "=" + result);
+            
+            
+            foreach (var calculation in historyOfCalculations){
+                Console.WriteLine("calculation: " + calculation);
+            }
+            //Console.WriteLine("historyOfCalculations: " + historyOfCalculations);
+            Console.WriteLine("result: " + result);
         }
         
         static void Guessnumber()
@@ -146,10 +224,10 @@ namespace LearningConsoleProject
         
         public static void Main(string[] args)
         {
-            //Calculator();
+            Calculator();
             //Guessnumber();
             //multiplicationTable();
-            stringParser();
+            //stringParser();
         }
     }
 }
