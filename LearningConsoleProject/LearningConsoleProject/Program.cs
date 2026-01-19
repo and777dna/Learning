@@ -157,9 +157,15 @@ namespace LearningConsoleProject
         static void Guessnumber()
         {
             Random rnd = new Random();
+            List
+            
             int number = rnd.Next(1, 101);
             Console.WriteLine(number);
             Console.WriteLine("Guess a number:");
+            
+            //- 3 уровня сложности (простой рандом: числа от 0 до 10, средний от 11 до 100 и т.д.)
+            // - Статистика попыток
+            // - Лучшие результаты//number of guesses, level of difficulty
             
             string num = Console.ReadLine();
             var nnumber = Int32.Parse(num);
@@ -266,8 +272,8 @@ namespace LearningConsoleProject
         
         public static void Main(string[] args)
         {
-            Calculator();
-            //Guessnumber();
+            //Calculator();
+            Guessnumber();
             //multiplicationTable();
             //stringParser();
         }
