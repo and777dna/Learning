@@ -11,6 +11,10 @@ using AddCarToParkClass = CarPark.CarPark.AddCar;
 using ParkClass = CarPark.ParkingLot.Park;
 using PrintoutParkingSpotClass =  CarPark.ParkingLot.PrintoutParkingSpot;
 
+using ParkingLotClass = CarPark.ParkingLot.ParkingLot;
+
+using AddToJsonClass = CarPark.JsonUtils.AddToJson;
+
 using GetFastestClass = CarPark.CarPark.GetFastest;
 
 using FindByLicenseClass = CarPark.ParkingLot.FindByLicense;
@@ -79,6 +83,9 @@ namespace CarPark
             PrintoutParkingSpotClass.PrintoutParkingSpots();
 
             FindByLicenseClass.FindBylicenseCar("GTP-4590");
+
+            
+            //AddToJsonClass.AddToJsonFile();//TODO: to give List param as argument
         }
     }
 }

@@ -48,6 +48,7 @@
         <Compile Include="Car\Car.cs" />
         <Compile Include="Car\ChangeColor.cs" />
         <Compile Include="Car\CreateCarProperties.cs" />
+        <Compile Include="JsonUtils\AddToJson.cs" />
         <Compile Include="ParkingLot\FindByLicense.cs" />
         <Compile Include="ParkingLot\FindCarOnTheParkingSpot.cs" />
         <Compile Include="ParkingLot\FindFreeSpot.cs" />
