@@ -1,0 +1,12 @@
+{
+  "Book1": {
+    "Author": "Mikhail Sholokhov",
+    "Name": "The Quiet Don",
+    "Year": 1925
+  },
+  "Book2": {
+    "Author": "Mikhail Lermontov",
+    "Name": "A Hero of Our Time",
+    "Year": 1840
+  }
+}

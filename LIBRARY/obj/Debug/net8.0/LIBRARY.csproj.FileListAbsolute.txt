@@ -1,0 +1,15 @@
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/bin/Debug/net8.0/LIBRARY
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/bin/Debug/net8.0/LIBRARY.deps.json
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/bin/Debug/net8.0/LIBRARY.runtimeconfig.json
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/bin/Debug/net8.0/LIBRARY.dll
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/bin/Debug/net8.0/LIBRARY.pdb
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/obj/Debug/net8.0/LIBRARY.GeneratedMSBuildEditorConfig.editorconfig
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/obj/Debug/net8.0/LIBRARY.AssemblyInfoInputs.cache
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/obj/Debug/net8.0/LIBRARY.AssemblyInfo.cs
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/obj/Debug/net8.0/LIBRARY.csproj.CoreCompileInputs.cache
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/obj/Debug/net8.0/LIBRARY.sourcelink.json
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/obj/Debug/net8.0/LIBRARY.dll
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/obj/Debug/net8.0/refint/LIBRARY.dll
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/obj/Debug/net8.0/LIBRARY.pdb
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/obj/Debug/net8.0/LIBRARY.genruntimeconfig.cache
+/Users/andreisartin/RiderProjects/Learning/LIBRARY/obj/Debug/net8.0/ref/LIBRARY.dll

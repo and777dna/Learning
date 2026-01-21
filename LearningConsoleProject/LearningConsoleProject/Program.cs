@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices.JavaScript;
+using System.Text.Json;
 
 namespace LearningConsoleProject
 {
@@ -16,14 +17,12 @@ namespace LearningConsoleProject
             {
                 Console.WriteLine("Enter a number:");
                 string numberCommandLine = Console.ReadLine();//TODO: to validate this
-                int numberInt;// = Int32.Parse(firstNumberCommandLine);
+                int numberInt;
             
                 if (!String.IsNullOrEmpty(numberCommandLine))
                 {
                     try
                     {
-                        //if (!firstNumberCommandLine.IsNullOrEmpty){}
-                        //if (firstNumberCommandLine != null && firstNumberCommandLine != "") { firstNumberInt = Int32.Parse(firstNumberCommandLine); }
                         numberInt = Int32.Parse(numberCommandLine);
                     }
                     catch (Exception e)
@@ -88,11 +87,26 @@ namespace LearningConsoleProject
             {
                 Console.WriteLine("to continue with next operation type in 'yes', to cancel execution type in 'no':");
                 string answerFromUser = Console.ReadLine();
+                if (answerFromUser != "yes" || answerFromUser != "no")
+                {
+                    throw new InvalidOperationException("you stated the wrong answer.");
+                }
                 return answerFromUser;
             }
-
-            static void printResultToJSON()
+            
+            
+            void AddToJsonFile()
             {
+                var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
+
+                //var jsonContent = ReadJsonFile(filePath);
+                //Console.WriteLine("jsonContent:" + jsonContent);
+                
+                string json = JsonSerializer.Serialize(historyOfCalculations);
+                Console.WriteLine("jsonContent:" + json);
+                //var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
+                Console.WriteLine("filePath:" + filePath);
+                File.WriteAllText(filePath, json);
             }
 
             void SingleCalculation()
@@ -105,39 +119,8 @@ namespace LearningConsoleProject
             }
             
             
-            
-            /*Console.WriteLine("Enter an operation to execute:");
-            string operation = Console.ReadLine();
-            //int result = firstNumber % secondNumber;
-            var result = 0;
-            switch (operation)
-            {//Числа a/b, операции + - * / %
-                case "+": Console.WriteLine("result: " + (firstNumberInt + secondNumberInt));
-                    result = firstNumberInt + secondNumberInt;
-                    break;
-                //return firstNumber + secondNumber;
-                case "-": result = firstNumberInt - secondNumberInt; break;
-                case "*": result = firstNumberInt * secondNumberInt; break;
-                case "/": result = firstNumberInt / secondNumberInt; break;
-                case "%": result = firstNumberInt % secondNumberInt; break;
-                default: Console.WriteLine("Invalid operation"); break;//TODO: to fix Exception on something else
-            }*/
-            /*string operation = operationInput();
-            int result = operationProcessing(operation);*/
-            //historyOfCalculations.Add(firstNumberInt + operation + secondNumberInt + "=" + result);
-            //AddResultToHistoryOfCalculations(firstNumberInt, secondNumberInt, operation, result);
             SingleCalculation();
-
-            /*string answerUserToContinueCalculation = continueCalculations();
-            if (answerUserToContinueCalculation == "no")
-            {
-                PrintHistoryOfOperation();
-                //Console.WriteLine("result: " + result);
-            }
-            else
-            {
-                SingleCalculation();
-            }*/
+            
             string answerUserToContinueCalculation = continueCalculations();
             while (answerUserToContinueCalculation == "yes")
             {
@@ -145,41 +128,60 @@ namespace LearningConsoleProject
                 answerUserToContinueCalculation = continueCalculations();
             }
             PrintHistoryOfOperation();
+            AddToJsonFile();
             
-            /*PrintHistoryOfOperation();
-            /*foreach (var calculation in historyOfCalculations){
-                Console.WriteLine("calculation: " + calculation);
-            }#1#
-            //Console.WriteLine("historyOfCalculations: " + historyOfCalculations);
-            Console.WriteLine("result: " + result);*/
         }
         
         static void Guessnumber()
         {
             Random rnd = new Random();
-            int number = rnd.Next(1, 101);
-            Console.WriteLine(number);
+            int numberToGuess = rnd.Next(1, 101);
+            Console.WriteLine(numberToGuess);
             Console.WriteLine("Guess a number:");
             
-            string num = Console.ReadLine();
-            var nnumber = Int32.Parse(num);
-            while (nnumber != number)
+            string numberInput = Console.ReadLine();
+            var myNumber = 0;
+            if (!String.IsNullOrEmpty(numberInput))
             {
-                if (nnumber > number)
+                myNumber = Int32.Parse(numberInput);
+            }
+            else
+            {
+                throw new ArgumentException("Parameter cannot be null");
+            }
+            
+            while (myNumber != numberToGuess)
+            {
+                if (myNumber > numberToGuess)
                 {
                     Console.WriteLine("type in a lesser number:");
-                    string nnum = Console.ReadLine();
-                    nnumber = Int32.Parse(nnum);
+                    string numberInputContinue = Console.ReadLine();
+                    if (!String.IsNullOrEmpty(numberInputContinue))
+                    {
+                        myNumber = Int32.Parse(numberInput);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Parameter cannot be null");
+                    }
+                    
                 }
-                if (nnumber < number)
+                if (myNumber < numberToGuess)
                 {
                     Console.WriteLine("type in a greater number:");
-                    string nnum = Console.ReadLine();
-                    nnumber = Int32.Parse(nnum);
+                    string numberInputContinue = Console.ReadLine();
+                    if (!String.IsNullOrEmpty(numberInputContinue))
+                    {
+                        myNumber = Int32.Parse(numberInput);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Parameter cannot be null");
+                    }
                 }
             }
             
-            if (nnumber == number)
+            if (myNumber == numberToGuess)
             {
                 Console.WriteLine("you guessed a number");
             }
@@ -219,14 +221,6 @@ namespace LearningConsoleProject
                     {
                         result = result + " " + variable;
                     }
-                    
-                    //result = string.Concat(result, variable);
-                    /*if (j == 10)
-                    {
-                        Console.WriteLine("|" + i*j);
-                    }*/
-                    //Console.WriteLine(variable + " " + result + " " + table);
-                    //Console.WriteLine(variable + " " + result);
                 }
             }
             Console.WriteLine(result);

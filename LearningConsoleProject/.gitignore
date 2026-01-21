@@ -1,0 +1,9 @@
+# Build output
+bin/
+obj/
+
+LearningConsoleProject/bin/
+LearningConsoleProject/obj/
+
+# IDE / JetBrains
+.idea/
