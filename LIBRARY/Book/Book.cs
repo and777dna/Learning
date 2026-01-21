@@ -13,6 +13,9 @@ public class Book//Library.Book.Book.BookData
     {
         AddToJSONClass.AddToJsonFile(book);
     }
-    
-    internal void DeleteBook(BookData book){}
+
+    internal void DeleteBook(BookData book)
+    {
+        
+    }
 }
