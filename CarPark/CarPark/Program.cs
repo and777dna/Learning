@@ -1,100 +1,84 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+
+using CarClass = CarPark.Car.Car;
+//using CreateCarPropertiesClass = CarPark.Car.CreateCarProperties.SetProperties;
+using CreateCarPropertiesClass = CarPark.Car.CreateCarProperties;
+using ChangeColorClass = CarPark.Car.ChangeColor;
+using ShowAllCarsParkClass = CarPark.CarPark.ShowAll;
+using AddCarToParkClass = CarPark.CarPark.AddCar;
+using ParkClass = CarPark.ParkingLot.Park;
+using PrintoutParkingSpotClass =  CarPark.ParkingLot.PrintoutParkingSpot;
+
+using GetFastestClass = CarPark.CarPark.GetFastest;
+
+using FindByLicenseClass = CarPark.ParkingLot.FindByLicense;
 
 namespace CarPark
 {
     internal class Program
     {
-        class Car 
-        {
-            public string Brand;      // field
-            public int Speed;         // field
-            public string Color {get; set;}  // property
+        /*
+            Class Car
     
             public void Accelerate() { Speed += 10; }
             public void Brake() { Speed -= 10; if (Speed < 0) Speed = 0; }
-
-            public void ChangeColor(string newColor)
-            {
-                Color = newColor;
-            }
-    
-            public void PrintInfo() 
-            {
-                Console.WriteLine($"{Brand} {Color} едет {Speed} км/ч"); 
-            }
-        }
-
-        static void createCarProperties(Car car,string[] parameters)
+        }*/
+        /*class CarPark
         {
-            var nameOfBrand = parameters[0];
-            var color = parameters[1];
-            car.Brand = nameOfBrand;
-            car.Color = color;
-        }
-        
-        class CarPark
-        {
-            //List<Car> cars = new List<Car>();
-            static List<Car> cars = new List<Car>();
-            public static void AddCar(Car car) { cars.Add(car); }
-            public static void ShowAll() { foreach(var c in cars) c.PrintInfo(); }
-
-            public static void GetFastest()
-            {
-                var fastestSpeed = 0;
-                foreach(var c in cars) fastestSpeed = Math.Max(c.Speed, fastestSpeed);
-                var findCarAccordingToSpeed = cars[0];
-                foreach(var c in cars) if (c.Speed == fastestSpeed) c.PrintInfo();//findCarAccordingToSpeed = c;
-                Console.WriteLine(findCarAccordingToSpeed.Brand);
-                //return findCarAccordingToSpeed;
-            }
-
             public static void ChangeRedToBlue()
             {
-                foreach(var c in cars)
+                foreach(var c in _cars)
                     if (c.Color == "красная")
                     {
                         c.ChangeColor("синяя");
                     }
             }
-        }
+        }*/
         
         public static void Main(string[] args)
         {
-            //Создай 3 машины (BMW красная, Tesla чёрная, Lada синяя).
-            //cat1 = Cat("Vasya", 3)
-            Car car1 = new Car();//"BMW","красная"
-            Car car2 = new Car();
-            Car car3 = new Car();
+            CarClass car1 = new CarClass();
+            CarClass car2 = new CarClass();
+            CarClass car3 = new CarClass();
             
             /*car1.Brand = "BMW";
             car1.Color = "красная";*/
             
-            string[] car1params = new string[2] {"BMW", "красная"};
-            string[] car2params = new string[2] {"Tesla", "чёрная"};
-            string[] car3params = new string[2] {"Lada", "синяя"};
-            createCarProperties(car1, car1params);
-            createCarProperties(car2, car2params);
-            createCarProperties(car3, car3params);
+            //TODO: to fix to create car through constructor
+            string[] car1Params = new string[4] {"BMW", "x6", "красная", "8HJL274"};//(Brand, Model, Color, LicensePlate)
+            string[] car2Params = new string[4] {"Tesla", "s", "чёрная", "GTP-4590"};
+            string[] car3Params = new string[4] {"Lada", "Granta Sedan", "синяя", "LKD-3125"};
+
+            var creator = new CreateCarPropertiesClass();
+            creator.SetProperties(car1, car1Params[0], car1Params[1], car1Params[2], car1Params[3]);
+            creator.SetProperties(car2, car2Params[0], car2Params[1], car2Params[2], car2Params[3]);
+            creator.SetProperties(car3, car3Params[0], car3Params[1], car3Params[2], car3Params[3]);
             car1.Speed = 0;
             car2.Speed = 20;
             car3.Speed = 0;
-            
-            //createCar({"car1", "BMW", "красная"});
-            
-            //car1.PrintInfo();
-            //car2.PrintInfo();
-            //car3.PrintInfo();
-            car2.ChangeColor("jhjhbjhb");
 
-            CarPark.AddCar(car1);
-            CarPark.AddCar(car2);
-            CarPark.AddCar(car3);
+            var colorChange = new ChangeColorClass();
+            colorChange.ChangeColorCar(car2, "jhjhbjhb");
+
+            AddCarToParkClass.AddCarToPark(car1);
+            AddCarToParkClass.AddCarToPark(car2);
+            AddCarToParkClass.AddCarToPark(car3);
+
+            ShowAllCarsParkClass.ShowAllCars();
             
-            CarPark.ShowAll();
             Console.WriteLine("finding the fastest car...");
-            CarPark.GetFastest();
+            GetFastestClass.GetFastesCar();
+            
+            ParkClass.ParkCar(car1);
+            ParkClass.ParkCar(car2);
+            
+            PrintoutParkingSpotClass.PrintoutParkingSpots();
+            ParkClass.Leave(car1);
+            PrintoutParkingSpotClass.PrintoutParkingSpots();
+
+            FindByLicenseClass.FindBylicenseCar("GTP-4590");
         }
     }
 }
