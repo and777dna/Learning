@@ -1,6 +1,9 @@
-*.log
-*.tmp
+# Build output
 bin/
 obj/
-.DS_Store
 
+CarPark/bin/
+CarPark/obj/
+
+# IDE / JetBrains
+.idea/
