@@ -1,11 +1,7 @@
-# .NET build output
+# Build output
 bin/
 obj/
 
-# User-specific files
-*.user
-*.suo
-
-# Debug symbols
-*.pdb
-
+# IDE / JetBrains
+.idea/
+.idea/
