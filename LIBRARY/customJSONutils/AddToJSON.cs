@@ -1,28 +1,21 @@
 using System.Text.Json;
+using Newtonsoft.Json;
 
-using BookClass = Library.Book.Book.BookData;
-
-using ReadJsonClass = Library.customJSONutils.ReadJson;
+//using BookClass = Library.Book.Book.BookData;
 
 namespace Library.customJSONutils;
 
-public static class AddToJson//Library.customJSONutils.AddToJSON
+public static class AddToJson//TODO: to use single responsibility here
 {
-    internal static void AddToJsonFile(BookClass book)
+    internal static void AddToJsonFile(Book.Book book)
     {
         var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
 
-        var jsonContent = ReadJsonClass.ReadJsonFile(filePath);
-        Console.WriteLine("jsonContent:" + jsonContent);
-        //var initialJson = filePath;
-        //var array = JArray.Parse(initialJson);
-        //var list = JsonConvert.DeserializeObject<List<Person>>(myJsonString);
+        List<Book.Book> books = Json.ReadJsonFile(filePath);
         
-        
-        string json = JsonSerializer.Serialize(book);
-        Console.WriteLine("jsonContent+json:"+jsonContent+json);
-        //var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
-        Console.WriteLine("filePath:" + filePath);
-        File.WriteAllText(filePath, jsonContent+json);
+        books.Add(book);//TODO: to create validation to see if i dont have it already
+
+        Json.WriteJsonFile(filePath, books);
+
     }
 }
