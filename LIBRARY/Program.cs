@@ -37,9 +37,11 @@ namespace Library
          Console.WriteLine("filePath:" + filePath);
          File.WriteAllText(filePath, json);*/
 
-         //var book1 = new BookClassAddBook("Mikhail Sholokhov", "The Quiet Don", 1925);
+         var book1 = new BookClassAddBook("Mikhail Sholokhov", "The Quiet Don", 1925);
          var findedBook = GettingBook.GetBook(searchType: "name", name: "The Quiet Don");
          Console.WriteLine("findedBook:" + findedBook.Author + "-" + findedBook.Name + "-" + findedBook.Year);
+         
+         //BookClassAddBook.DeleteBook("The Quiet Don");
 
          //var book2 = new BookClass("Mikhail Lermontov", "A Hero of Our Time", 1840);
          /*public string Author {get; set;}//TODO: to implement encapsulation here instead of this

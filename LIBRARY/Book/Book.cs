@@ -1,3 +1,5 @@
+using Library.customJSONutils;
+
 namespace Library.Book;
 using AddToJSONClass = Library.customJSONutils.AddToJson;
 public class Book//Library.Book.Book.BookData
@@ -23,8 +25,17 @@ public class Book//Library.Book.Book.BookData
         AddToJSONClass.AddToJsonFile(book);
     }
 
-    internal void DeleteBook(Book book)
+    //internal static void DeleteBook(Book book, string nameOfBook)
+    internal static void DeleteBook(string name)
     {
         
+        /*var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
+        List<Book> books = Json.ReadJsonFile(filePath);
+        Console.WriteLine("books.Count before:" + books.Count);
+        var findedBookToDelete = books.Find(book => book.Name == name);
+        books.Remove(findedBookToDelete);
+        
+        Json.WriteJsonFile(filePath, books);*/
+        DeleteFromJSON.DeleteFromJsonFile(name);
     }
 }
