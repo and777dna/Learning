@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.IO;
+using Library.Book;
 
 //using BookClass = Library.Book.Book.BookData;
 using BookClassAddBook = Library.Book.Book;
@@ -36,8 +37,10 @@ namespace Library
          Console.WriteLine("filePath:" + filePath);
          File.WriteAllText(filePath, json);*/
 
-         var book1 = new BookClassAddBook("Mikhail Sholokhov", "The Quiet Don", 1925);
-         
+         //var book1 = new BookClassAddBook("Mikhail Sholokhov", "The Quiet Don", 1925);
+         var findedBook = GettingBook.GetBook(searchType: "name", name: "The Quiet Don");
+         Console.WriteLine("findedBook:" + findedBook.Author + "-" + findedBook.Name + "-" + findedBook.Year);
+
          //var book2 = new BookClass("Mikhail Lermontov", "A Hero of Our Time", 1840);
          /*public string Author {get; set;}//TODO: to implement encapsulation here instead of this
          public string Name {get; set;}
@@ -53,9 +56,7 @@ namespace Library
    
 }
 /*Консольный проект + json для хранения данных.
-   - Класс Book (Author, Name, Year)
-   - [CRUD](https://skyeng.ru/magazine/wiki/it-industriya/chto-takoe-crud/) операции (создать, получить, обновить, удалить книгу из источника данных)
-   - Поиск по автору/названию/году
+   - [CRUD](https://skyeng.ru/magazine/wiki/it-industriya/chto-takoe-crud/) операции (обновить, удалить книгу из источника данных)
    
    - Сортировка по популярности (кол-во выдач)
    - Выдача/возврат книг с датами
