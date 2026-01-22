@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices.JavaScript;
 using System.Text.Json;
+using InputValidatorClass = LearningConsoleProject.InputValidator;
 
 namespace LearningConsoleProject
 {
+    
     internal class Program
     {
         static void Calculator() 
@@ -132,7 +134,7 @@ namespace LearningConsoleProject
             
         }
         
-        static void Guessnumber()
+        static void GuessNumber()
         {
             Random rnd = new Random();
             int numberToGuess = rnd.Next(1, 101);
@@ -150,35 +152,24 @@ namespace LearningConsoleProject
                 throw new ArgumentException("Parameter cannot be null");
             }
             
+            /*int InputValidator()
+            {
+                    
+            }*/
+            string numberInputContinue = Console.ReadLine();
+            
             while (myNumber != numberToGuess)
             {
                 if (myNumber > numberToGuess)
                 {
                     Console.WriteLine("type in a lesser number:");
-                    string numberInputContinue = Console.ReadLine();
-                    if (!String.IsNullOrEmpty(numberInputContinue))
-                    {
-                        myNumber = Int32.Parse(numberInput);
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Parameter cannot be null");
-                    }
-                    
                 }
-                if (myNumber < numberToGuess)
+                else
                 {
                     Console.WriteLine("type in a greater number:");
-                    string numberInputContinue = Console.ReadLine();
-                    if (!String.IsNullOrEmpty(numberInputContinue))
-                    {
-                        myNumber = Int32.Parse(numberInput);
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Parameter cannot be null");
-                    }
                 }
+                numberInputContinue = Console.ReadLine();
+                myNumber = InputValidatorClass.Validate(numberInputContinue);
             }
             
             if (myNumber == numberToGuess)
@@ -261,7 +252,7 @@ namespace LearningConsoleProject
         public static void Main(string[] args)
         {
             Calculator();
-            //Guessnumber();
+            //GuessNumber();
             //multiplicationTable();
             //stringParser();
         }
