@@ -12,7 +12,10 @@ public class BorrowingBook
 
         findedBookToBorrow.BorrowingCount += 1;*/
         //UpdatingBook.UpdateBook(book, updateParameter: "borrowingCount", borrowingCount: book.BorrowingCount+=1);
-        UpdatingBook.UpdateBook(book, updateParameter: "borrowingCount");
+        DateTime currentDateWithZeroTime = DateTime.Today;
+        string currentDate = currentDateWithZeroTime.ToString().Split()[0];
+        
+        UpdatingBook.UpdateBook(book, updateParameter: "borrowingCount", borrowDate: currentDate);
 
         //RefreshBook()
         //refreshBook, setBorrowDate, set

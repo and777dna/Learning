@@ -9,8 +9,24 @@ public class Book//Library.Book.Book.BookData
     public int Year {get; set;}
 
     private int _borrowingCount = 0;
-    private string _borrowDate { get; set; } = "";
+    private string _borrowDate = "";
     private string _borrowReturn { get; set; } = "";
+
+    public string SetBorrowDate
+    {
+        set
+        {
+            _borrowDate = value;
+            /*string dayToReturn = (Int32.Parse(value.Split(".")[0]) + 5).ToString();
+            var arrayWithDate = value.Split(".");
+            arrayWithDate[0] = dayToReturn;
+            _borrowReturn = arrayWithDate.Join(".");*/
+        }
+        get
+        {
+            return _borrowDate;
+        }
+    }
 
     public int BorrowingCount
     {
@@ -26,29 +42,15 @@ public class Book//Library.Book.Book.BookData
             return _borrowingCount;
         }
     }
-    /*public int Health
-       {
-           get { return health; }
-           set
-           {
-               if (value >= 0)
-                   health = value;
-           }
-       }*/
+  
     
-    public Book(string author, string name, int year)//this is a constructor
-    {////_borrowingCount,_borrowDate, _borrowReturn
+    public Book(string author, string name, int year)
+    {
         Author = author;
         Name = name;
         Year = year;
     }
-    /*internal class BookData
-    {//Author, Name, Year
-        public string Author {get; set;}//TODO: to implement encapsulation here instead of this??
-        public string Name {get; set;}
-        public int Year {get; set;}
-    }*/
-    //var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
+
     internal static void CreateBook(Book book)
     {
         AddToJSONClass.AddToJsonFile(book);

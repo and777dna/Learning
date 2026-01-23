@@ -4,7 +4,7 @@ namespace Library.Book;
 
 public class UpdatingBook
 {
-    internal static void UpdateBook(Book book, string updateParameter = "name", string name = "", string author = "", int year = 0)
+    internal static void UpdateBook(Book book, string updateParameter = "name", string name = "", string author = "", int year = 0, string borrowDate = "")
     {
         /*Console.WriteLine("UpdateBook" + book.Name + book.Author);
         var findedBookToUpdate = GettingBook.GetBook(name: book.Name);
@@ -38,7 +38,8 @@ public class UpdatingBook
             case "name": findedBookToUpdate.Name = name; break;
             case "author": findedBookToUpdate.Author = author; break;
             case "year": findedBookToUpdate.Year = year; break;
-            case "borrowingCount": findedBookToUpdate.BorrowingCount += 1; break;
+            case "borrowingCount": findedBookToUpdate.BorrowingCount += 1;
+                findedBookToUpdate.SetBorrowDate = borrowDate; Console.WriteLine("returnDate:" + borrowDate.GetType()); break;
             default: findedBookToUpdate = null; break;//TODO: to fix this
         }
         
