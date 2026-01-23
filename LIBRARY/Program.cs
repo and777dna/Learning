@@ -17,15 +17,17 @@ namespace Library
       public static void Main()
       {
 
-         var book1 = new BookClassAddBook("Mikhail Sholokhov", "The Quiet Don", 1925);//TODO: to create ID for each book
+         //var book1 = new BookClassAddBook("Mikhail Sholokhov", "The Quiet Don", 1925);//TODO: to create ID for each book
          //var findedBook = GettingBook.GetBook(searchType: "name", name: "The Quiet Don");
          //Console.WriteLine("findedBook:" + findedBook.Author + "-" + findedBook.Name + "-" + findedBook.Year);
          
          //BookClassAddBook.DeleteBook("name", "The Quiet Don");
          //BookClassAddBook.CreateBook(book1);
          //UpdatingBook.UpdateBook(book1, updateParameter: "name", name: "The Quiet Don");
-         BorrowingBook.BorrowBook(book1);
-         //var book2 = new BookClass("Mikhail Lermontov", "A Hero of Our Time", 1840);
+         //BorrowingBook.BorrowBook(book1);
+         //var book2 = new BookClassAddBook("Mikhail Lermontov", "A Hero of Our Time", 1840);
+         //BorrowingBook.BorrowBook(book2);
+         //BorrowingFrequencySorting.BorrowingFrequencySort();
          /*public string Author {get; set;}//TODO: to implement encapsulation here instead of this
          public string Name {get; set;}
          public string Year {get; set;}*/
