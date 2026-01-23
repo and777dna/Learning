@@ -7,8 +7,37 @@ public class Book//Library.Book.Book.BookData
     public string Author {get; set;}//TODO: to implement encapsulation here instead of this??
     public string Name {get; set;}//this is a property
     public int Year {get; set;}
-    public Book(string author, string name, int year)//this is a constructor
+
+    private int _borrowingCount = 0;
+    private string _borrowDate { get; set; } = "";
+    private string _borrowReturn { get; set; } = "";
+
+    public int BorrowingCount
     {
+        set
+        {
+            if (value >= 0)
+            {
+                _borrowingCount = value;
+            }
+        }
+        get
+        {
+            return _borrowingCount;
+        }
+    }
+    /*public int Health
+       {
+           get { return health; }
+           set
+           {
+               if (value >= 0)
+                   health = value;
+           }
+       }*/
+    
+    public Book(string author, string name, int year)//this is a constructor
+    {////_borrowingCount,_borrowDate, _borrowReturn
         Author = author;
         Name = name;
         Year = year;

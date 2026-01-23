@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using System.IO;
 using Library.Book;
+using Library.bookCustomer;
 
 //using BookClass = Library.Book.Book.BookData;
 using BookClassAddBook = Library.Book.Book;
@@ -13,14 +14,6 @@ namespace Library
 {
    internal class Program
    {
-      
-      public class data
-      {
-         public int Id { get; set; }
-         public int SSN { get; set; }
-         public string Message { get; set;}
-      }
-
       public static void Main()
       {
 
@@ -30,7 +23,8 @@ namespace Library
          
          //BookClassAddBook.DeleteBook("name", "The Quiet Don");
          //BookClassAddBook.CreateBook(book1);
-
+         //UpdatingBook.UpdateBook(book1, updateParameter: "name", name: "The Quiet Don");
+         BorrowingBook.BorrowBook(book1);
          //var book2 = new BookClass("Mikhail Lermontov", "A Hero of Our Time", 1840);
          /*public string Author {get; set;}//TODO: to implement encapsulation here instead of this
          public string Name {get; set;}
@@ -48,6 +42,6 @@ namespace Library
 /*Консольный проект + json для хранения данных.
    - [CRUD](https://skyeng.ru/magazine/wiki/it-industriya/chto-takoe-crud/) операции (обновить книгу из источника данных)
    
-   - Сортировка по популярности (кол-во выдач)
-   - Выдача/возврат книг с датами
+   - Сортировка по популярности (кол-во выдач)//_borrowingCount,_borrowDate, _borrowReturn
+   - Выдача/возврат книг с датами//
 */
