@@ -23,25 +23,13 @@ namespace Library
 
       public static void Main()
       {
-         
-         /*List<data> _data = new List<data>();
-         _data.Add(new data()
-         {
-            Id = 1,
-            SSN = 2,
-            Message = "A Message"
-         });
-         
-         string json = JsonSerializer.Serialize(_data);
-         var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
-         Console.WriteLine("filePath:" + filePath);
-         File.WriteAllText(filePath, json);*/
 
-         var book1 = new BookClassAddBook("Mikhail Sholokhov", "The Quiet Don", 1925);
-         var findedBook = GettingBook.GetBook(searchType: "name", name: "The Quiet Don");
-         Console.WriteLine("findedBook:" + findedBook.Author + "-" + findedBook.Name + "-" + findedBook.Year);
+         var book1 = new BookClassAddBook("Mikhail Sholokhov", "The Quiet Don", 1925);//TODO: to create ID for each book
+         //var findedBook = GettingBook.GetBook(searchType: "name", name: "The Quiet Don");
+         //Console.WriteLine("findedBook:" + findedBook.Author + "-" + findedBook.Name + "-" + findedBook.Year);
          
-         //BookClassAddBook.DeleteBook("The Quiet Don");
+         //BookClassAddBook.DeleteBook("name", "The Quiet Don");
+         //BookClassAddBook.CreateBook(book1);
 
          //var book2 = new BookClass("Mikhail Lermontov", "A Hero of Our Time", 1840);
          /*public string Author {get; set;}//TODO: to implement encapsulation here instead of this
@@ -58,7 +46,7 @@ namespace Library
    
 }
 /*Консольный проект + json для хранения данных.
-   - [CRUD](https://skyeng.ru/magazine/wiki/it-industriya/chto-takoe-crud/) операции (обновить, удалить книгу из источника данных)
+   - [CRUD](https://skyeng.ru/magazine/wiki/it-industriya/chto-takoe-crud/) операции (обновить книгу из источника данных)
    
    - Сортировка по популярности (кол-во выдач)
    - Выдача/возврат книг с датами

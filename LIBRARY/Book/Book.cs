@@ -24,18 +24,11 @@ public class Book//Library.Book.Book.BookData
     {
         AddToJSONClass.AddToJsonFile(book);
     }
-
-    //internal static void DeleteBook(Book book, string nameOfBook)
-    internal static void DeleteBook(string name)
+    
+    internal static void DeleteBook(string searchType, string name = "", string author = "", int year = 0)
     {
-        
-        /*var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
-        List<Book> books = Json.ReadJsonFile(filePath);
-        Console.WriteLine("books.Count before:" + books.Count);
-        var findedBookToDelete = books.Find(book => book.Name == name);
-        books.Remove(findedBookToDelete);
-        
-        Json.WriteJsonFile(filePath, books);*/
-        DeleteFromJSON.DeleteFromJsonFile(name);
+        var findedBookToDelete = GettingBook.GetBook(searchType: "name", name, author, year);
+        //Console.WriteLine("findedBookToDelete " + findedBookToDelete.Author + findedBookToDelete.Year + findedBookToDelete.Name);
+        DeleteFromJSON.DeleteFromJsonFile(findedBookToDelete);
     }
 }
