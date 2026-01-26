@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-//using System.Text.Json;
-
-using ParkingLotClass = CarPark.ParkingLot.ParkingLot;
-
 namespace CarPark.JsonUtils//CarPark.JsonUtils.AddToJson
 {
     public class AddToJson

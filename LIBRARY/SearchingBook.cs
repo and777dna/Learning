@@ -1,6 +1,4 @@
-using Library.customJSONutils;
-
-namespace Library.Book;
+using Library;
 
 public static class SearchingBook
 {
@@ -8,10 +6,24 @@ public static class SearchingBook
     {
         var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
         
-        List<Book> books = Json.ReadJsonFile(filePath);
+        List<Book> books = Json.ReadJsonFile(filePath);//TODO: validation here
 
-        Book findedBook = books.Find(book => book.Name == name);
-        return findedBook;
+        Book findedBook;
+        try
+        {
+            findedBook = books.Find(book => book.Name == name);
+            Console.WriteLine("I am inside books.Find(book => book.Name == name);");
+            Console.WriteLine(findedBook);
+            return findedBook;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("I am inside NullReferenceException");
+            Console.WriteLine(e);
+            throw;
+        }
+        /*Console.WriteLine(findedBook);
+        return findedBook;*/
     }
 
     internal static Book AuthorSeach(string author)
