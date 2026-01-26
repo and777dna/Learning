@@ -1,3 +1,5 @@
+using LIBRARY;
+
 namespace Library;
 
 public class Book//Library.Book.Book.BookData
@@ -16,10 +18,6 @@ public class Book//Library.Book.Book.BookData
         {
             _borrowReturn = value;
         }
-        get
-        {
-            return _borrowReturn;
-        }
     }
 
     public string SetBorrowDate
@@ -27,10 +25,6 @@ public class Book//Library.Book.Book.BookData
         set
         {
             _borrowDate = value;
-        }
-        get
-        {
-            return _borrowDate;
         }
     }
 
@@ -65,15 +59,17 @@ public class Book//Library.Book.Book.BookData
     internal static void DeleteBook(string searchType, string name = "", string author = "", int year = 0)
     {
         var findedBookToDelete = GetBook(searchType: "name", name, author, year);
+        Utils.SearchValidation(findedBookToDelete);
         Json.DeleteFromJsonFile(findedBookToDelete);
     }
     
     internal static void UpdateBook(Book book, string updateParameter = "name", string name = "", string author = "", int year = 0, string borrowDate = "", string borrowReturn = "")
     {
         var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
-        List<Book> books = Json.ReadJsonFile(filePath);
+        var books = Json.ReadJsonFile(filePath);
         
-        var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.Author == book.Author);
+        var findedBookToUpdate = books?.Find(bookDatabase => bookDatabase.Author == book.Author);
+        Utils.SearchValidation(findedBookToUpdate);
         switch(updateParameter)//TODO: to add validation
         {
             case "name": findedBookToUpdate.Name = name; break;
@@ -82,17 +78,15 @@ public class Book//Library.Book.Book.BookData
             case "borrowingCount": findedBookToUpdate.BorrowingCount += 1;
                 findedBookToUpdate.SetBorrowDate = borrowDate; Console.WriteLine("returnDate:" + borrowDate.GetType()); break;
             case "borrowingReturn": findedBookToUpdate.BorrowReturn = borrowReturn; break;
-            default: findedBookToUpdate = null; break;//TODO: to fix this
+            default: throw new ArgumentException("you typed in the wrong argument");
         }
-        
-        
         
         Json.WriteJsonFile(filePath, books);
     }
     
-    internal static Book GetBook(string searchType = "name", string name = "", string author = "", int year = 0)
+    internal static Book? GetBook(string searchType = "name", string name = "", string author = "", int year = 0)
     {
-        Book findedBook;
+        Book? findedBook;
         Console.WriteLine("GetBook:" + searchType + " " + name);
         switch(searchType)//TODO: to add validation
         {
@@ -101,7 +95,7 @@ public class Book//Library.Book.Book.BookData
             case "year": findedBook = SearchingBook.YearSearch(year); break;
             default: findedBook = null; break;
         }
-        Console.WriteLine("GetBook findedBook:" + findedBook.Name + findedBook.Author);
+        Console.WriteLine("GetBook findedBook:" + findedBook?.Name + findedBook?.Author);
         return findedBook;
     }
 }

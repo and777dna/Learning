@@ -1,41 +1,29 @@
-using Library.Book;
-using Library.customJSONutils;
+using System.ComponentModel.DataAnnotations;
+using Library;
 
-namespace Library.bookCustomer;
+namespace LIBRARY;
 
-public class BorrowingBook
+public static class BorrowingBook
 {
-    //Book.GettingBook.GetBook(searchType: "name", name, author, year);
-
-    internal static void BorrowBook(Book.Book book)
+    internal static void BorrowBook(Book book)
     {
-        /*var findedBookToBorrow = GettingBook.GetBook(book.Name);
-
-        findedBookToBorrow.BorrowingCount += 1;*/
-        //UpdatingBook.UpdateBook(book, updateParameter: "borrowingCount", borrowingCount: book.BorrowingCount+=1);
-        DateTime currentDateWithZeroTime = DateTime.Today;
-        string currentDate = currentDateWithZeroTime.ToString().Split()[0];
-        
-        UpdatingBook.UpdateBook(book, updateParameter: "borrowingCount", borrowDate: currentDate);
-
-        //RefreshBook()
-        //refreshBook, setBorrowDate, set
+        var currentDate = Utils.ExtractDate();
+        Book.UpdateBook(book, updateParameter: "borrowingCount", borrowDate: currentDate);
     }
     
     public static void BorrowingFrequencySort()
     {
         var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
-        List<Book.Book> books = Json.ReadJsonFile(filePath);
-        IEnumerable<Book.Book> sortedBooksByFrequency = books.OrderBy(book => book.BorrowingCount);
-        
-        foreach (Book.Book book in sortedBooksByFrequency)
-        {
-            Console.WriteLine("{0} - {1}", book.Name, book.BorrowingCount);
-        }
+        var books = Json.ReadJsonFile(filePath);
+        if(books == null){throw new ValidationException("no books were found");}
+        IEnumerable<Book> sortedBooksByFrequency = Utils.Sort(books);
+        Utils.PrintoutBooks(sortedBooksByFrequency);
     }
     
-    public static void ReturnBook()
+    public static void ReturnBook(Book book)
     {
-    
+        string currentDate = Utils.ExtractDate();
+        
+        Book.UpdateBook(book, updateParameter: "borrowingReturn", borrowReturn: currentDate);
     }
 }
