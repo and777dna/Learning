@@ -1,4 +1,6 @@
 ﻿
+using LIBRARY;
+
 namespace Library
 {
    internal class Program
@@ -49,7 +51,11 @@ namespace Library
          Book.CreateBook(book18);
          Book.CreateBook(book19);*/
 
-         var book1 = Book.GetBook( searchType: "name", name: "dfvdf");
+         var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
+         var books = Json.ReadJsonFile(filePath);
+         var library = new BookService(books);
+         
+         var book1 = library.GetBook( searchType: "name", name: "dfvdf");
          if(book1 == null){Console.WriteLine("book1 == null");}
          //BorrowingBook.BorrowBook(book1);
          //BookClassAddBook.DeleteBook("name", "The Quiet Don");

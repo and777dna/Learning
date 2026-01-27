@@ -8,7 +8,7 @@ public static class BorrowingBook
     internal static void BorrowBook(Book book)
     {
         var currentDate = Utils.ExtractDate();
-        Book.UpdateBook(book, updateParameter: "borrowingCount", borrowDate: currentDate);
+        BookService.UpdateBook(book, updateParameter: "borrowingCount", borrowDate: currentDate);
     }
     
     public static void BorrowingFrequencySort()
@@ -17,13 +17,13 @@ public static class BorrowingBook
         var books = Json.ReadJsonFile(filePath);
         if(books == null){throw new ValidationException("no books were found");}
         IEnumerable<Book> sortedBooksByFrequency = Utils.Sort(books);
-        Utils.PrintoutBooks(sortedBooksByFrequency);
+        BookService.PrintoutBooks(sortedBooksByFrequency);
     }
     
     public static void ReturnBook(Book book)
     {
         string currentDate = Utils.ExtractDate();
         
-        Book.UpdateBook(book, updateParameter: "borrowingReturn", borrowReturn: currentDate);
+        BookService.UpdateBook(book, updateParameter: "borrowingReturn", borrowReturn: currentDate);
     }
 }

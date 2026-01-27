@@ -17,18 +17,11 @@ public class Utils
     {
         return books.OrderBy(book => book.BorrowingCount);;
     }
-
-    internal static void PrintoutBooks(IEnumerable<Book> books)
-    {
-        foreach (var book in books)
-        {
-            Console.WriteLine("{0} - {1}", book.Name, book.BorrowingCount);
-        }
-    }
+    
 
     internal static void CheckUnique(string nameOfBook)
     {
-        var findedBook = Book.GetBook(name: nameOfBook);
+        var findedBook = BookService.GetBook(name: nameOfBook);
         if (findedBook != null)
         {
             throw new ValidationException("book is not original");
