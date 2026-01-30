@@ -1,41 +1,58 @@
-using Library;
-using LIBRARY;
+using System.Collections;
 
+namespace LIBRARY;
 
-public static class SearchingBook
+internal interface ISearch
 {
-    internal static Book? NameSearch(string name)
+    internal IEnumerable Search(object searchWord);
+}
+internal class ByYear(List<Book> books) : ISearch
+{
+    private List<Book>? _books = books;
+    public IEnumerable Search(object year)
     {
-        var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
-        
-        var books = Json.ReadJsonFile(filePath);
-
-        var findedBook = books?.Find(book => book.Name == name);
-        Utils.SearchValidation(findedBook);
-        return findedBook;
+        return _books?.Where(b => b.Year == (int)year) ?? Enumerable.Empty<Book>();
     }
+}
 
-    internal static Book? AuthorSeach(string author)
+internal class ByGenre(List<Book> books) : ISearch
+{
+    private List<Book>? _books = books;
+    public IEnumerable Search(object genre)
     {
-        var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
-        
-        var books = Json.ReadJsonFile(filePath);
-
-        var findedBook = books?.Find(book => book.Author == author);
-        Utils.SearchValidation(findedBook);
-        return findedBook;
+        return _books?.Where(b => b.BookGenre == (Genre)genre) ?? Enumerable.Empty<Book>();
     }
+}
 
-    internal static Book? YearSearch(int year)
+internal class ByAuthor(List<Book> books) : ISearch
+{
+    private List<Book>? _books = books;
+    public IEnumerable Search(object author)
     {
-        var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
-        
-        var books = Json.ReadJsonFile(filePath);
-
-        var findedBook = books?.Find(book => book.Year == year);
-
-        Utils.SearchValidation(findedBook);
-        
-        return findedBook;
+        return _books?.Where(b => b.Author == (string)author) ?? Enumerable.Empty<Book>();
     }
+}
+
+internal class ByName(List<Book> books) : ISearch
+{
+    private List<Book>? _books = books;
+    public IEnumerable Search(object name)
+    {
+        return _books?.Where(b => b.Author == (string)name) ?? Enumerable.Empty<Book>();
+    }
+}
+
+public class SearchingBookForPublic
+{
+    private readonly ISearch _search;
+    internal SearchingBookForPublic(ISearch search)
+    {
+        _search = search;
+    }
+    
+    public IEnumerable Search(object typeOfSearch)
+    {
+        return _search.Search(typeOfSearch);
+    }
+    
 }

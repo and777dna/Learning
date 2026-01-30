@@ -1,36 +1,54 @@
-using LIBRARY;
+namespace LIBRARY;
 
-namespace Library;
-
-public class Book//Library.Book.Book.BookData
+public class Book
 {
+    public readonly Guid BookId;// = Guid.NewGuid();
+    //public readonly Guid BookId = _bookId;
+    
     public string Author {get; set;}
-    public string Name {get; set;}//this is a property
+    public string Name {get; set;}
     public int Year {get; set;}
+    private bool _bookIsCheckOut;
+    public Genre BookGenre { get; set; }
 
     private int _borrowingCount = 0;
-    private string _borrowDate = "";
-    private string _borrowReturn = "";
+    //private string _borrowDate = "";
+    private DateTime _borrowDate;
+    private DateTime _returnDate;
 
-    public string BorrowReturn
+
+    public bool BookIsCheckout
+    {
+        get => _bookIsCheckOut;
+        set => _bookIsCheckOut = value;
+    }
+    public DateTime ReturnDate
     {
         set
         {
-            _borrowReturn = value;
+            _returnDate = value;
+        }
+        get
+        {
+            return _returnDate;
         }
     }
 
-    public string SetBorrowDate
+    public DateTime BorrowDate
     {
         set
         {
             _borrowDate = value;
         }
+        get
+        {
+            return _borrowDate;
+        }
     }
 
     public int BorrowingCount
     {
-        set//TODO: why private set is not working
+        set
         {
             if (value >= 0)
             {
@@ -44,11 +62,13 @@ public class Book//Library.Book.Book.BookData
     }
   
     
-    public Book(string author, string name, int year)
+    public Book(string author, string name, int year, Guid bookId, Genre bookGenre )
     {
-        Author = author;
-        Name = name;
+        Author = author ?? throw new ArgumentNullException(nameof(author));
+        Name = name ?? throw new ArgumentNullException(nameof(name));
         Year = year;
+        BookId = bookId;
+        BookGenre = bookGenre; // ?? throw new ArgumentNullException(nameof(bookGenre));
     }
 
     

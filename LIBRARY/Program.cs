@@ -1,7 +1,4 @@
-﻿
-using LIBRARY;
-
-namespace Library
+﻿namespace LIBRARY
 {
    internal class Program
    {
@@ -30,33 +27,59 @@ namespace Library
          var book17 = new Book("Alexander Pushkin", "The Captain's Daughter", 1836);
          var book18 = new Book("Nikolai Gogol", "Taras Bulba", 1835);
          var book19 = new Book("Yevgeny Zamyatin", "We", 1924);
-
-         Book.CreateBook(book1);
-         Book.CreateBook(book2);
-         Book.CreateBook(book3);
-         Book.CreateBook(book4);
-         Book.CreateBook(book5);
-         Book.CreateBook(book6);
-         Book.CreateBook(book7);
-         Book.CreateBook(book8);
-         Book.CreateBook(book9);
-         Book.CreateBook(book10);
-         Book.CreateBook(book11);
-         Book.CreateBook(book12);
-         Book.CreateBook(book13);
-         Book.CreateBook(book14);
-         Book.CreateBook(book15);
-         Book.CreateBook(book16);
-         Book.CreateBook(book17);
-         Book.CreateBook(book18);
-         Book.CreateBook(book19);*/
-
-         var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
-         var books = Json.ReadJsonFile(filePath);
-         var library = new BookService(books);
          
-         var book1 = library.GetBook( searchType: "name", name: "dfvdf");
-         if(book1 == null){Console.WriteLine("book1 == null");}
+         var books = BookRepository.ReadJsonFile();
+         var library = new BookService(books);
+         library.AddBookToLibrary(book1);
+         library.AddBookToLibrary(book2);
+         library.AddBookToLibrary(book3);
+         library.AddBookToLibrary(book4);
+         library.AddBookToLibrary(book5);
+         library.AddBookToLibrary(book6);
+         library.AddBookToLibrary(book7);
+         library.AddBookToLibrary(book8);
+         library.AddBookToLibrary(book9);
+         library.AddBookToLibrary(book10);
+         library.AddBookToLibrary(book11);
+         library.AddBookToLibrary(book12);
+         library.AddBookToLibrary(book13);
+         library.AddBookToLibrary(book14);
+         library.AddBookToLibrary(book15);
+         library.AddBookToLibrary(book16);
+         library.AddBookToLibrary(book17);
+         library.AddBookToLibrary(book18);
+         library.AddBookToLibrary(book19);*/
+         //var reader1 = new Reader("andrei", 731802095, Guid.NewGuid());
+         //var reader2 = new Reader("nikol", 888333999, Guid.NewGuid());
+         //AddReader
+         //var readers = ReaderRepository.ReadJsonFile();
+         //var readerServiceClass = new ReaderService(readers);
+         //readerServiceClass.AddReader(reader1);
+         //readerServiceClass.AddReader(reader2);
+         //var bookId = new Guid("9f936252-39e6-424b-9071-eed68781e874");//TODO:uncomment
+         /*var readerId = new Guid("e335fd57-6278-4193-9eca-e89d15dc9c0f");
+         var book1Id = new Guid("9f936252-39e6-424b-9071-eed68781e874");
+         var book2Id = new Guid("bc2a69e4-c9dd-4308-a1bc-5b78b4d0cfb1");
+         var book3Id = new Guid("7dd82460-7b84-4144-bcbd-d3db5ed07819");
+         var book4Id = new Guid("530569cd-a095-4dd4-acd7-887e45817aa2");
+         //var readerId = reader1.TicketNumber;
+         
+         var borrowingBookClass = new BorrowingBook();*/
+         //borrowingBookClass.ReturnBook(bookId, readerId);
+         /*borrowingBookClass.BorrowBook(book1Id, readerId);
+         borrowingBookClass.BorrowBook(book2Id, readerId);
+         borrowingBookClass.BorrowBook(book3Id, readerId);
+         borrowingBookClass.BorrowBook(book4Id, readerId);*/
+         /*borrowingBookClass.ReturnBook(book1Id, readerId);
+         borrowingBookClass.ReturnBook(book2Id, readerId);
+         borrowingBookClass.ReturnBook(book3Id, readerId);
+         borrowingBookClass.ReturnBook(book4Id, readerId);*/
+         /*var filePath = Path.Combine(AppContext.BaseDirectory, "path.json");
+         var books = BookRepository.ReadJsonFile();
+         var library = new BookService(books);*/
+
+         //var book1 = library.GetBook( searchType: "name", name: "dfvdf");
+         //if(book1 == null){Console.WriteLine("book1 == null");}
          //BorrowingBook.BorrowBook(book1);
          //BookClassAddBook.DeleteBook("name", "The Quiet Don");
          //BookClassAddBook.CreateBook(book1);
@@ -64,6 +87,9 @@ namespace Library
          //var book1 = Book.GetBook( searchType: "author", author: "Mikhail Lermontov");
          //BorrowingBook.ReturnBook(book1);
          //BorrowingBook.BorrowBook(book1);
+         var books = BookRepository.ReadJsonFile();
+         var BookServiceClass = new BookService(books);
+         BookServiceClass.GetBookForPublic(name: "Lev Tolstoy");
       }
       
 
