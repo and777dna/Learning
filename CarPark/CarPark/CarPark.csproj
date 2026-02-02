@@ -40,21 +40,10 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="CarPark\AddCar.cs" />
-        <Compile Include="CarPark\CarPark.cs" />
-        <Compile Include="CarPark\ChangeRedToBlue.cs" />
-        <Compile Include="CarPark\GetFastest.cs" />
-        <Compile Include="CarPark\ShowAll.cs" />
-        <Compile Include="Car\Car.cs" />
-        <Compile Include="Car\ChangeColor.cs" />
-        <Compile Include="Car\CreateCarProperties.cs" />
+        <Compile Include="Car.cs" />
+        <Compile Include="CarPark.cs" />
         <Compile Include="JsonUtils\AddToJson.cs" />
-        <Compile Include="ParkingLot\FindByLicense.cs" />
-        <Compile Include="ParkingLot\FindCarOnTheParkingSpot.cs" />
-        <Compile Include="ParkingLot\FindFreeSpot.cs" />
-        <Compile Include="ParkingLot\Park.cs" />
-        <Compile Include="ParkingLot\ParkingLot.cs" />
-        <Compile Include="ParkingLot\printoutParkingSpot.cs" />
+        <Compile Include="ParkingLot.cs" />
         <Compile Include="Program.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
