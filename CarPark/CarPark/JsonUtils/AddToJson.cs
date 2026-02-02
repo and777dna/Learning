@@ -1,4 +1,4 @@
-namespace CarPark.JsonUtils//CarPark.JsonUtils.AddToJson
+namespace CarPark.JsonUtils
 {
     public class AddToJson
     {

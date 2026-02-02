@@ -6,41 +6,35 @@ namespace CarPark
     {
         public static void Main()
         {
-            var car1 = new Car("BMW", "x6", "красная", "8HJL274");//TODO: to add validation for licensePlate
-            var car2 = new Car("Tesla", "s", "чёрная", "GTP-4590");
-            var car3 = new Car("Lada", "Granta Sedan", "синяя", "LKD-3125");
-            
-            /*car1.Speed = 0;
-            car2.Speed = 20;
-            car3.Speed = 0;*/
+            var car1 = new Car("BMW", "x6", "красная", "8HJL274", 0);//TODO: to add validation for licensePlate
+            var car2 = new Car("Tesla", "s", "чёрная", "GTP-4590", 0);
+            var car3 = new Car("Lada", "Granta Sedan", "синяя", "LKD-3125", 0);
 
-            Car.ChangeColor(car2, "jhjhbjhb");
+            car2.ChangeColor("jhjhbjhb");
 
             var carPark1 = new CarPark();
-            AddCar.AddCarToPark(car1, carPark1.Cars);
-            AddCar.AddCarToPark(car2, carPark1.Cars);
-            AddCar.AddCarToPark(car3, carPark1.Cars);
+            carPark1.AddCarToPark(car1);
+            carPark1.AddCarToPark(car2);
+            carPark1.AddCarToPark(car3);
             
-            ShowAll.ShowAllCars(carPark1.Cars);
+            carPark1.ShowAllCars();
             
             Console.WriteLine("finding the fastest car...");
-            GetFastest.GetFastesCar(carPark1.Cars);
+            carPark1.GetFastestCar();
 
             var parking1 = new ParkingLot();
-            ParkingLot.FindFreeSpot(parking1.ParkingLotList);
+            parking1.FindFreeSpot();
 
-            ParkingLot.Action.Alarm += ParkingLot.Action.NotificateAboutParking;
-            ParkingLot.Action.Notify += ParkingLot.Action.NotificateAboutParking;
+            parking1.Alarm += parking1.NotificateAboutParking;
+            parking1.Notify += parking1.NotificateAboutParking;
             
-            ParkingLot.Action.ParkCar(car1, parking1.ParkingLotList);
-            ParkingLot.Action.ParkCar(car2, parking1.ParkingLotList);
-            ParkingLot.Action.Leave(car1, parking1.ParkingLotList);
+            parking1.ParkCar(car1);
+            parking1.ParkCar(car2);
+            parking1.Leave(car1);
             
-            parking1.PrintoutParkingSpots(parking1.ParkingLotList);
+            parking1.PrintoutParkingSpots();
             
-            parking1.FindBylicenseCar("GTP-4590", parking1.ParkingLotList);
-            
-            //AddToJsonClass.AddToJsonFile();
+            parking1.FindBylicenseCar("GTP-4590");
         }
     }
 }

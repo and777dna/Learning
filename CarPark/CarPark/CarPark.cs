@@ -1,41 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CarPark
 {
     public class CarPark
     {
         private List<Car> _cars = new List<Car>();
-
-        public List<Car> Cars
-        {
-            get { return _cars; }
-            private set { _cars = value; }
-        }
-    }
-    
-    public static class AddCar
-    {
-        public static void AddCarToPark(Car car, List<Car> cars) {cars.Add(car);}
-    }
-    
-    public static class ChangeRedToBlue
-    {
+        public IReadOnlyList<Car> Cars => _cars.AsReadOnly();
         
-    }
-    
-    public static class GetFastest
-    {
-        internal static void GetFastesCar(List<Car> cars)
+        public void AddCarToPark(Car car) {_cars.Add(car);}
+        
+        internal void GetFastestCar()
         {
             var fastestSpeed = 0;
-            foreach(var c in cars) fastestSpeed = Math.Max(c.Speed, fastestSpeed);
-            foreach(var c in cars) if (c.Speed == fastestSpeed) Console.WriteLine(c.Brand);
+            var sortedAccordingToSpeed = _cars.OrderByDescending(car => car.Speed);
+            var fastestCar = sortedAccordingToSpeed.First();
+            Console.WriteLine(fastestCar.Brand);
         }
-    }
-    
-    public static class ShowAll
-    { 
-        public static void ShowAllCars(List<Car> cars) { foreach(var c in cars) Console.WriteLine($"{c?.Brand} {c?.Color}  км/ч"); }
+        
+        public void ShowAllCars() { foreach(var c in _cars) Console.WriteLine($"{c?.Brand} {c?.Color} {c?.Speed}км/ч"); }
     }
 }

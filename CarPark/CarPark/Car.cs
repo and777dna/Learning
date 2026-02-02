@@ -1,39 +1,46 @@
-namespace CarPark
-{
+using System;
+
+namespace CarPark 
+{ 
     public class Car
     {
-            public string Brand { get; private set; }
-            public string Model { get; private set; }
-            public int Speed { get; private set; }      
-            public string Color;  // property
-            public string LicensePlate { get; private set; }
+        public string Brand { get; private set; }
+        public string Model { get; private set; }
+        private int _speed; 
+        public string Color { get; private set; }
+        public string LicensePlate { get; private set; }
 
-            public Car(string brand, string model, string color, string licensePlate)
-            {
-                Brand = brand;
-                Model = model;
-                Color = color;
-                LicensePlate = licensePlate;
-            }
+        public Car(string brand, string model, string color, string licensePlate, int speed)
+        {
+            Brand = brand ?? throw new ArgumentNullException(nameof(brand));
+            Model = model ?? throw new ArgumentNullException(nameof(model));
+            Color = color;
+            LicensePlate = licensePlate ?? throw new ArgumentNullException(nameof(licensePlate));
+            _speed = speed;
+        }
 
-            public int ChangeSpeed
+        public int Speed
+        {
+            set
             {
-                set
+                if (value >= 0)
                 {
-                    if (value >= 0)
-                    {
-                        Speed = value;
-                    }
+                    _speed = value;
                 }
-                get
+                else
                 {
-                    return Speed;
+                    Console.WriteLine("Speed can't be set lower than 0");
                 }
             }
-
-            public static void ChangeColor(Car car, string color)
+            get
             {
-                car.Color = color;
+                return _speed;
             }
+        }
+
+        public void ChangeColor(string color)
+        {
+            Color = color;
+        }
     }
 }
