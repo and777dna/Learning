@@ -4,18 +4,18 @@ namespace LIBRARY;
 
 internal interface IBookRepository
 {
-    public List<Book>? ReadJsonFile();//Non-abstract and non-extern method must declare a body
-    internal void AddToJsonFile(Book book);//Non-public method 'ReadJsonFile' cannot implement method from interface IBookRepository
-    internal void WriteJsonFile(List<Book>? books);
-    internal void DeleteFromJsonFile(Guid? bookId);
+    public List<Book>? ReadFile();//Non-abstract and non-extern method must declare a body
+    internal void AddToFile(Book book);//Non-public method 'ReadJsonFile' cannot implement method from interface IBookRepository
+    internal void WriteFile(List<Book>? books);
+    internal void DeleteFromFile(Guid? bookId);
 }
 
 
 internal class FileBookRepository(string path) : IBookRepository
 {
     private string _path = path;
-    private readonly IBookRepository _bookRepository;
-    public List<Book>? ReadJsonFile()
+    //private readonly IBookRepository _bookRepository;
+    public List<Book>? ReadFile()
     {
         var jsonRead = "";
         try
@@ -35,9 +35,9 @@ internal class FileBookRepository(string path) : IBookRepository
         return books;
     }
 
-    public void AddToJsonFile(Book book)
+    public void AddToFile(Book book)
     {
-        var books = ReadJsonFile();
+        var books = ReadFile();
         
         try
         {
@@ -49,18 +49,18 @@ internal class FileBookRepository(string path) : IBookRepository
             throw new ArgumentNullException(nameof(books));
 
         }
-        WriteJsonFile(books);
+        WriteFile(books);
     }
 
-    public void WriteJsonFile(List<Book>? books)
+    public void WriteFile(List<Book>? books)
     {
         var jsonWrite = JsonConvert.SerializeObject(books, Formatting.Indented);
         File.WriteAllText(_path, jsonWrite);
     }
 
-    public void DeleteFromJsonFile(Guid? bookId)
+    public void DeleteFromFile(Guid? bookId)
     {
-        var books = ReadJsonFile();
+        var books = ReadFile();
         if (books == null)
         {
             throw new FileNotFoundException();
@@ -72,6 +72,6 @@ internal class FileBookRepository(string path) : IBookRepository
             throw new ArgumentNullException(nameof(bookId));
         }
         books?.Remove(findedBookToDelete);
-        WriteJsonFile(books);
+        WriteFile(books);
     }
 }
