@@ -4,7 +4,7 @@ internal interface ISort
 {
     internal IEnumerable<Book> Sort();
 }
-    
+
 internal class SortByPopularity(List<Book> books) : ISort
 {
     private List<Book> _books = books;
@@ -66,5 +66,6 @@ internal class SortingBook
         return _sort.Sort();
 
     }
+    
     
 }
