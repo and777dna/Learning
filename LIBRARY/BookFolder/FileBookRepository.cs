@@ -1,21 +1,25 @@
+using System.Data;
+using LIBRARY.Enums;
 using Newtonsoft.Json;
 
 namespace LIBRARY;
 
 internal interface IBookRepository
 {
-    public List<Book>? ReadFile();//Non-abstract and non-extern method must declare a body
-    internal void AddToFile(Book book);//Non-public method 'ReadJsonFile' cannot implement method from interface IBookRepository
-    internal void WriteFile(List<Book>? books);
-    internal void DeleteFromFile(Guid? bookId);
-}
+    public List<Book>? Read();//Non-abstract and non-extern method must declare a body
+    //internal void AddToFile(Book book);//Non-public method 'ReadJsonFile' cannot implement method from interface IBookRepository
+    internal void Create(Book book);
+    //internal void WriteFile(List<Book>? books);//WEWEWEWDFEWRCERC
+    internal void Delete(Guid? bookId);
+    internal void Update(Guid? bookId, object paramToChange, UpdateParameter updateParameter = UpdateParameter.Name);
+}//Create, Read, Delete   ,,,Update
 
 
 internal class FileBookRepository(string path) : IBookRepository
 {
     private string _path = path;
     //private readonly IBookRepository _bookRepository;
-    public List<Book>? ReadFile()
+    public List<Book>? Read()
     {
         var jsonRead = "";
         try
@@ -35,9 +39,9 @@ internal class FileBookRepository(string path) : IBookRepository
         return books;
     }
 
-    public void AddToFile(Book book)
+    public void Create(Book book)
     {
-        var books = ReadFile();
+        var books = Read();
         
         try
         {
@@ -52,15 +56,40 @@ internal class FileBookRepository(string path) : IBookRepository
         WriteFile(books);
     }
 
-    public void WriteFile(List<Book>? books)
-    {
-        var jsonWrite = JsonConvert.SerializeObject(books, Formatting.Indented);
-        File.WriteAllText(_path, jsonWrite);
+    public void Update(Guid? bookId,object paramToChange, UpdateParameter updateParameter = UpdateParameter.Name)
+    {//get => fix => 
+        var books = Read();
+        var findedBookToUpdate = books?.Find(bookDatabase => bookDatabase.BookId == bookId);
+        switch(updateParameter)//TODO: to add validation
+        {
+            case UpdateParameter.Name: findedBookToUpdate.Name = (string)paramToChange; break;//TODO: to add type validation to paramToChange
+            case UpdateParameter.Author: findedBookToUpdate.Author = (string)paramToChange; break;
+            case UpdateParameter.Year: findedBookToUpdate.Year = (int)paramToChange; break;
+            case UpdateParameter.BorrowingBook:         //TODO: to create interface here
+                if (findedBookToUpdate.BookIsCheckout)
+                {
+                    throw new ConstraintException("the book is already checkout");
+                }
+                findedBookToUpdate.BorrowingCount += 1;
+                findedBookToUpdate.BookIsCheckout = true;
+                findedBookToUpdate.BorrowDate = (DateTime)paramToChange; Console.WriteLine("returnDate:" + paramToChange.GetType()); 
+                break;
+            case UpdateParameter.ReturningBook:
+                if (findedBookToUpdate.BookIsCheckout == false)
+                {
+                    throw new ConstraintException("the book is not checkout");
+                }
+                findedBookToUpdate.ReturnDate = (DateTime)paramToChange;
+                findedBookToUpdate.BookIsCheckout = false;
+                break;
+            default: throw new ArgumentException("you typed in the wrong argument");
+        }
+        WriteFile(books);
     }
 
-    public void DeleteFromFile(Guid? bookId)
+    public void Delete(Guid? bookId)
     {
-        var books = ReadFile();
+        var books = Read();
         if (books == null)
         {
             throw new FileNotFoundException();
@@ -73,5 +102,11 @@ internal class FileBookRepository(string path) : IBookRepository
         }
         books?.Remove(findedBookToDelete);
         WriteFile(books);
+    }
+    
+    public void WriteFile(List<Book>? books)
+    {
+        var jsonWrite = JsonConvert.SerializeObject(books, Formatting.Indented);
+        File.WriteAllText(_path, jsonWrite);
     }
 }
