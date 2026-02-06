@@ -1,12 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace LIBRARY;
 
+[Table("reader")]
 public class Reader
-{/*reader.CurrenCheckoutBook = bookId;
-    reader.UpdateReader(ticketNumber);*/
+{
+    [Column("name")]
     public readonly string Name;
-
+    [Key]
     public readonly Guid TicketNumber;
-    
+    [Column("phoneNumber")]
     public readonly int PhoneNumber;
 
     public List<Guid>? _borrowedBooks { get; } = new List<Guid>(3);

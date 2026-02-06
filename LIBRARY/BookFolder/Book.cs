@@ -1,23 +1,33 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using LIBRARY.Enums;
 
 namespace LIBRARY;
 
+[Table("book")]
 public class Book
 {
+    [Key]
     public readonly Guid BookId;// = Guid.NewGuid();
     //public readonly Guid BookId = _bookId;
     
+    [Column("author")]
     public string Author {get; set;}
+    [Column("name")]
     public string Name {get; set;}
+    [Column("year")]
     public int Year {get; set;}
     private bool _bookIsCheckOut;
+    [Column("genre")]
     public Genre BookGenre { get; set; }
 
+    [Column("borrowingCount")]
     private int _borrowingCount = 0;
-    //private string _borrowDate = "";
+    [Column("borrowDate")]
     private DateTime _borrowDate;
+    [Column("returnDate")]
     private DateTime _returnDate;
-
+    
 
     public bool BookIsCheckout
     {
