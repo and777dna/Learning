@@ -1,3 +1,5 @@
+/*using LIBRARY.BookFolder;
+
 namespace LIBRARY;
 
 public class SqlBookRepository : IBookRepository
@@ -6,7 +8,7 @@ public class SqlBookRepository : IBookRepository
     {
         return null;
     }
-    public void AddToFile(Book book){}
-    public void WriteFile(List<Book>? books){}
+    public void Add(Book book){}
+    public void Write(List<Book>? books){}
     public void DeleteFromFile(Guid? bookId){}
-}
+}*/

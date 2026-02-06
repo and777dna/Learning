@@ -1,3 +1,5 @@
+using LIBRARY.Enums;
+
 namespace LIBRARY;
 
 public class Book

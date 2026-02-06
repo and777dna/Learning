@@ -1,22 +1,34 @@
+using LIBRARY.BookFolder;
+using LIBRARY.Enums;
+
 namespace LIBRARY;
 
 public class BorrowingBook
 {
+    private readonly IBookRepository _bookRepository;
+    internal BorrowingBook(IBookRepository bookRepository)
+    {
+        _bookRepository = bookRepository;
+    }
     internal void BorrowBook(Guid bookId, Guid ticketNumber)
     {
         if (bookId == null) { throw new ArgumentNullException(nameof(bookId)); }
-        var BookServiceClass = new BookService(BookRepository.ReadJsonFile());//TODO: Reader.CurrenCheckoutBook = Book.BookId
-
+        
+        
         var readers = ReaderRepository.ReadJsonFile();
         var readerDatabase = new ReaderService(readers);
         
-        BookServiceClass.UpdateBook(bookId, UpdateParameter.BorrowingBook, borrowDate: DateTime.Now);
+        _bookRepository.Update(bookId, DateTime.Now, UpdateParameter.BorrowingBook);
         readerDatabase.UpdateReader(ticketNumber, bookId, true);
     }
    
     public static void DisplayByBorrowingPopularity()//TODO: to make DI here
     {
-        var books = BookRepository.ReadJsonFile();
+        string _path = Path.Combine(AppContext.BaseDirectory, "books.json");
+        //var books = BookRepository.ReadJsonFile();
+
+        IBookRepository BookOperationsClass = new FileBookRepository(_path);
+        var books = BookOperationsClass.Read();
         if(books == null){throw new FileNotFoundException();}
 
         ISort sortByPopularity = new SortByPopularity(books);
@@ -24,7 +36,7 @@ public class BorrowingBook
         var sortClass = new SortingBook(sortByPopularity);
         var sortedByPopularity = sortClass.Sort();
         
-        var BookServiceClass = new BookService(BookRepository.ReadJsonFile());
+        var BookServiceClass = new BookService(BookOperationsClass);
         BookServiceClass.PrintoutBooks(sortedByPopularity);
     }
     
@@ -32,10 +44,9 @@ public class BorrowingBook
     {
         var readers = ReaderRepository.ReadJsonFile();
         var readerDatabase = new ReaderService(readers);
-        var BookServiceClass = new BookService(BookRepository.ReadJsonFile());
         
         Console.WriteLine("Guid ticketNumber, Guid bookId:" + ticketNumber + " " + bookId);
-        BookServiceClass.UpdateBook(bookId, UpdateParameter.ReturningBook, borrowDate: DateTime.Now.AddDays(7));
+        _bookRepository.Update(bookId, DateTime.Now.AddDays(7), UpdateParameter.ReturningBook);
         readerDatabase.UpdateReader(ticketNumber,Guid.Empty, false);
     }
 }
