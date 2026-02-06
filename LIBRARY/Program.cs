@@ -1,4 +1,5 @@
 ﻿using LIBRARY.BookFolder;
+using LIBRARY.Enums;
 
 namespace LIBRARY
 {
@@ -96,6 +97,11 @@ namespace LIBRARY
          var books = BookOperationsClass.Read();
          var BookServiceClass = new BookService(BookOperationsClass);
          BookServiceClass.PrintoutBooks(books);
+
+         var SqlBookRepositoryClass = new SqlBookRepository();
+         var book = new Book("Fyodor Dostoevsky", "Crime and Punishment", 1866, Genre.History);
+         Console.WriteLine(book.Name);
+         SqlBookRepositoryClass.Create(book);
          //BookServiceClass.GetBookForPublic(name: "Lev Tolstoy");
       }
       

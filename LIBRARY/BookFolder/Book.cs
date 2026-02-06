@@ -7,8 +7,10 @@ namespace LIBRARY;
 [Table("book")]
 public class Book
 {
+    //private readonly Guid _bookId;
+    
     [Key]
-    public readonly Guid BookId;// = Guid.NewGuid();
+    public Guid BookId { get; set; } = Guid.NewGuid();
     //public readonly Guid BookId = _bookId;
     
     [Column("author")]
@@ -17,7 +19,6 @@ public class Book
     public string Name {get; set;}
     [Column("year")]
     public int Year {get; set;}
-    private bool _bookIsCheckOut;
     [Column("genre")]
     public Genre BookGenre { get; set; }
 
@@ -28,7 +29,7 @@ public class Book
     [Column("returnDate")]
     private DateTime _returnDate;
     
-
+    private bool _bookIsCheckOut;
     public bool BookIsCheckout
     {
         get => _bookIsCheckOut;
@@ -72,14 +73,14 @@ public class Book
             return _borrowingCount;
         }
     }
-  
-    
-    public Book(string author, string name, int year, Guid bookId, Genre bookGenre )
+
+
+    public Book() {}
+    public Book(string author, string name, int year, Genre bookGenre )
     {
         Author = author ?? throw new ArgumentNullException(nameof(author));
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Year = year;
-        BookId = bookId;
         BookGenre = bookGenre; // ?? throw new ArgumentNullException(nameof(bookGenre));
     }
 
