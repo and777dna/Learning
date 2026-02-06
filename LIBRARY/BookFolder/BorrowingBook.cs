@@ -6,7 +6,6 @@ namespace LIBRARY;
 public class BorrowingBook
 {
     private readonly IBookRepository _bookRepository;
-
     internal BorrowingBook(IBookRepository bookRepository)
     {
         _bookRepository = bookRepository;
@@ -48,7 +47,6 @@ public class BorrowingBook
         
         Console.WriteLine("Guid ticketNumber, Guid bookId:" + ticketNumber + " " + bookId);
         _bookRepository.Update(bookId, DateTime.Now.AddDays(7), UpdateParameter.ReturningBook);
-        //BookServiceClass.UpdateBook(bookId, UpdateParameter.ReturningBook, borrowDate: DateTime.Now.AddDays(7));
         readerDatabase.UpdateReader(ticketNumber,Guid.Empty, false);
     }
 }

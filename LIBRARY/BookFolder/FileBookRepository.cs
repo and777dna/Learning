@@ -1,24 +1,15 @@
 using System.Data;
+using LIBRARY.BookFolder;
 using LIBRARY.Enums;
 using Newtonsoft.Json;
 
 namespace LIBRARY;
 
-internal interface IBookRepository
-{
-    public List<Book>? Read();//Non-abstract and non-extern method must declare a body
-    //internal void AddToFile(Book book);//Non-public method 'ReadJsonFile' cannot implement method from interface IBookRepository
-    internal void Create(Book book);
-    //internal void WriteFile(List<Book>? books);//WEWEWEWDFEWRCERC
-    internal void Delete(Guid? bookId);
-    internal void Update(Guid? bookId, object paramToChange, UpdateParameter updateParameter = UpdateParameter.Name);
-}//Create, Read, Delete   ,,,Update
-
 
 internal class FileBookRepository(string path) : IBookRepository
 {
     private string _path = path;
-    //private readonly IBookRepository _bookRepository;
+    //TODO: to add stack here? and how then i will access it?
     public List<Book>? Read()
     {
         var jsonRead = "";

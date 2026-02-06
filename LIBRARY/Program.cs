@@ -1,4 +1,6 @@
-﻿namespace LIBRARY
+﻿using LIBRARY.BookFolder;
+
+namespace LIBRARY
 {
    internal class Program
    {
@@ -87,9 +89,14 @@
          //var book1 = Book.GetBook( searchType: "author", author: "Mikhail Lermontov");
          //BorrowingBook.ReturnBook(book1);
          //BorrowingBook.BorrowBook(book1);
-         var books = BookRepository.ReadJsonFile();
-         var BookServiceClass = new BookService(books);
-         BookServiceClass.GetBookForPublic(name: "Lev Tolstoy");
+         
+         string _path = Path.Combine(AppContext.BaseDirectory, "books.json");
+
+         IBookRepository BookOperationsClass = new FileBookRepository(_path);
+         var books = BookOperationsClass.Read();
+         var BookServiceClass = new BookService(BookOperationsClass);
+         BookServiceClass.PrintoutBooks(books);
+         //BookServiceClass.GetBookForPublic(name: "Lev Tolstoy");
       }
       
 
