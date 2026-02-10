@@ -12,6 +12,7 @@ public class SqlBookRepository : IBookRepository
         return null;
     }
 
+    
     public void Create(Book book)
     {
         var context = new MyDbContext();//TODO: to make this to constructor
