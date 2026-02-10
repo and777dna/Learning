@@ -47,7 +47,7 @@ internal class FileBookRepository(string path) : IBookRepository
         WriteFile(books);
     }
 
-    public void Update(Guid? bookId,object paramToChange, UpdateParameter updateParameter = UpdateParameter.Name)
+    public void Update(Guid bookId,object paramToChange, UpdateParameter updateParameter = UpdateParameter.Name)
     {//get => fix => 
         var books = Read();
         var findedBookToUpdate = books?.Find(bookDatabase => bookDatabase.BookId == bookId);

@@ -105,7 +105,8 @@ namespace LIBRARY
          //SqlBookRepositoryClass.Create(book);
          //SqlBookRepositoryClass.Create(book1);
          //SqlBookRepositoryClass.Delete((Guid)54c092dc-1c34-4a80-8648-1d4567312d39);
-         SqlBookRepositoryClass.Delete(Guid.Parse("5a2ee767-ec35-435c-96d0-2431bf331653"));
+         //SqlBookRepositoryClass.Delete(Guid.Parse("5a2ee767-ec35-435c-96d0-2431bf331653"));
+         SqlBookRepositoryClass.Update(Guid.Parse("d92ea08b-d253-44b4-803c-d89451ab83ef"), "fff", UpdateParameter.Name);
          //BookServiceClass.GetBookForPublic(name: "Lev Tolstoy");
          /*ILogger loggerMessages = new ConsoleLogger();
          var loggerForConsole = new Logger(loggerMessages);

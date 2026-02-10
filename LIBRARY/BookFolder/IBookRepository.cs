@@ -9,5 +9,5 @@ internal interface IBookRepository
     internal void Create(Book book);
     //internal void WriteFile(List<Book>? books);//WEWEWEWDFEWRCERC
     internal void Delete(Guid bookId);
-    internal void Update(Guid? bookId, object paramToChange, UpdateParameter updateParameter = UpdateParameter.Name);
+    internal void Update(Guid bookId, object paramToChange, UpdateParameter updateParameter = UpdateParameter.Name);
 }

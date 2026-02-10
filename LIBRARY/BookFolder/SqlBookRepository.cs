@@ -7,6 +7,8 @@ public class SqlBookRepository : IBookRepository
 {
     public List<Book>? Read()
     {
+        var context = new MyDbContext();
+        //List<Book> books = context.Book.;
         return null;
     }
 
@@ -27,5 +29,28 @@ public class SqlBookRepository : IBookRepository
         context.Book.Remove(book);
         context.SaveChanges();
     }
-    public void Update(Guid? bookId, object paramToChange, UpdateParameter updateParameter = UpdateParameter.Name){}
+
+    public void Update(Guid bookId, object paramToChange, UpdateParameter updateParameter = UpdateParameter.Name)
+    {
+        var context = new MyDbContext();
+        var book = new Book { BookId = bookId };
+        //var book = context.Book.Find(bookId);
+        ILogger loggerMessages = new ConsoleLogger();
+        var loggerForConsole = new Logger(loggerMessages);
+        loggerForConsole.Logging(book?.BookId + " " + book?.Name + " " + book?.Author);
+        //var book = context.Book.Find(1);
+        switch (updateParameter) //TODO: to add validation
+        {
+            case UpdateParameter.Name: book.Name = (string)paramToChange;
+                break;
+            case UpdateParameter.Year: book.Year = (int)paramToChange;
+                break;
+            case UpdateParameter.Author: ;
+                break;
+            case UpdateParameter.BorrowingBook: ;
+                break;
+            case UpdateParameter.ReturningBook: ;
+                break;
+        }
+    }
 }
