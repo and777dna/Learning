@@ -18,7 +18,7 @@ public class BookService
         _bookRepository.Create(book);
     }
 
-    internal void DeleteBook(Guid? bookId)
+    internal void DeleteBook(Guid bookId)
     {
         if (bookId == null)
         {

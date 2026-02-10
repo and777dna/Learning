@@ -78,7 +78,7 @@ internal class FileBookRepository(string path) : IBookRepository
         WriteFile(books);
     }
 
-    public void Delete(Guid? bookId)
+    public void Delete(Guid bookId)
     {
         var books = Read();
         if (books == null)

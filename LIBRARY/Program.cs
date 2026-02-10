@@ -103,7 +103,9 @@ namespace LIBRARY
          var book1 = new Book("Mikhail Sholokhov", "The Quiet Don", 1925, Genre.History);
          Console.WriteLine(book.Name);
          //SqlBookRepositoryClass.Create(book);
-         SqlBookRepositoryClass.Create(book1);
+         //SqlBookRepositoryClass.Create(book1);
+         //SqlBookRepositoryClass.Delete((Guid)54c092dc-1c34-4a80-8648-1d4567312d39);
+         SqlBookRepositoryClass.Delete(Guid.Parse("5a2ee767-ec35-435c-96d0-2431bf331653"));
          //BookServiceClass.GetBookForPublic(name: "Lev Tolstoy");
          /*ILogger loggerMessages = new ConsoleLogger();
          var loggerForConsole = new Logger(loggerMessages);
