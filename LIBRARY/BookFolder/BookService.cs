@@ -15,7 +15,7 @@ public class BookService
 
     internal void AddBookToLibrary(Book book)
     {
-        _bookRepository.Create(book); //TODO: to change to name ReadFile();
+        _bookRepository.Create(book);
     }
 
     internal void DeleteBook(Guid? bookId)
@@ -76,8 +76,6 @@ public class BookService
     internal IEnumerable GetBookForPublic(SearchType searchType = SearchType.Name, string name = "", string author = "",
         int year = 0, Genre genre = Genre.Fiction)
     {
-        Console.WriteLine("GetBook:" + searchType + " " + name);
-        
         var books = _bookRepository.Read();
         ISearch searchByAuthor = new ByAuthor(books);
         ISearch searchByName = new ByName(books);
@@ -104,6 +102,7 @@ public class BookService
     
     internal void PrintoutBooks(IEnumerable<Book> books)//IEnumerable<Book> books
     {
+        var ConsoleLoggerClass = new ConsoleLogger();
         foreach (var book in books)
         {
             Console.WriteLine("{0} - {1}", book.Name, book.BorrowingCount);
