@@ -91,7 +91,7 @@ namespace LIBRARY
          //BorrowingBook.ReturnBook(book1);
          //BorrowingBook.BorrowBook(book1);
          
-         /*string _path = Path.Combine(AppContext.BaseDirectory, "books.json");
+         string _path = Path.Combine(AppContext.BaseDirectory, "books.json");
 
          IBookRepository BookOperationsClass = new FileBookRepository(_path);
          var books = BookOperationsClass.Read();
@@ -100,12 +100,14 @@ namespace LIBRARY
 
          var SqlBookRepositoryClass = new SqlBookRepository();
          var book = new Book("Fyodor Dostoevsky", "Crime and Punishment", 1866, Genre.History);
+         var book1 = new Book("Mikhail Sholokhov", "The Quiet Don", 1925, Genre.History);
          Console.WriteLine(book.Name);
-         SqlBookRepositoryClass.Create(book);*/
+         //SqlBookRepositoryClass.Create(book);
+         SqlBookRepositoryClass.Create(book1);
          //BookServiceClass.GetBookForPublic(name: "Lev Tolstoy");
-         ILogger loggerMessages = new ConsoleLogger();
+         /*ILogger loggerMessages = new ConsoleLogger();
          var loggerForConsole = new Logger(loggerMessages);
-         loggerForConsole.Logging("asdf");
+         loggerForConsole.Logging("asdf");*/
       }
       
 
