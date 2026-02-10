@@ -1,6 +1,7 @@
 using LIBRARY.BookFolder;
 using LIBRARY.db;
 using LIBRARY.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace LIBRARY;
 public class SqlBookRepository : IBookRepository
@@ -9,7 +10,15 @@ public class SqlBookRepository : IBookRepository
     {
         var context = new MyDbContext();
         //List<Book> books = context.Book.;
-        return null;
+        /*context.Model.GetEntityTypes().Select(t => t.GetTableName())
+            .Distinct()
+            .ToList();*/
+        Console.WriteLine("I am inside Read");
+        //context.Book.ToList();
+        Console.WriteLine("context.Book.ToList().Count:" + context.Book.ToList().Count);
+        List<Book> books = context.Book.ToList();
+        
+        return books;
     }
 
     
@@ -37,13 +46,18 @@ public class SqlBookRepository : IBookRepository
         var context = new MyDbContext();
         var book = new Book { BookId = bookId };
         //var book = context.Book.Find(bookId);
+        
         ILogger loggerMessages = new ConsoleLogger();
         var loggerForConsole = new Logger(loggerMessages);
         loggerForConsole.Logging(book?.BookId + " " + book?.Name + " " + book?.Author);
         //var book = context.Book.Find(1);
+        /*var student = context.Students.First(s => s.Name == "Alice");
+           student.Age = 23;
+           context.SaveChanges();*/
         switch (updateParameter) //TODO: to add validation
         {
             case UpdateParameter.Name: book.Name = (string)paramToChange;
+                context.SaveChanges();
                 break;
             case UpdateParameter.Year: book.Year = (int)paramToChange;
                 break;
