@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 
 namespace LIBRARY;
 
-
 internal class FileBookRepository(string path) : IBookRepository
 {
     private string _path = path;

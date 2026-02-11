@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Data;
 using LIBRARY.Enums;
+using LIBRARY.Result;
 
 namespace LIBRARY.BookFolder;
 
@@ -20,60 +21,55 @@ public class BookService
 
     internal void DeleteBook(Guid bookId)
     {
-        if (bookId == null)
-        {
-            throw new ArgumentNullException(nameof(bookId));
-        }
-
         _bookRepository.Delete(bookId);
     }
 
-    internal Guid? FindBookId(string? name)
+    internal Result<Guid> FindBookId(string name)
     {
-        if (name == null)
-        {
-            throw new ArgumentNullException(nameof(name));
-        }
-
         var books = _bookRepository.Read();
         if (books == null)
         {
-            throw new FileNotFoundException();
-            
+            return Result<Guid>.Failure("no file was found");
         }
-        var id = SearchByNameToId(name, books);
-        return id;
+        //var id = SearchByNameToId(name, books);
+        var result = SearchByNameToId(name, books);
+        return Result<Guid>.Success(result.Value); //id._value;
     }
 
-    internal Guid? SearchByNameToId(string? name, List<Book>? books)
+    internal Result<Guid> SearchByNameToId(string? name, List<Book>? books)
     {
         if (name == null || books == null)
         {
-            throw new ArgumentNullException(nameof(name));
+            return Result<Guid>.Failure("no books or name of book");
         }
         var findedBook = books.Find(book => book.Name == name);
         if (findedBook == null)
         {
-            throw new KeyNotFoundException();
+            return Result<Guid>.Failure("no book was found");
         }
-        return findedBook.BookId;
+        return Result<Guid>.Success(findedBook.BookId);
     }
 
-    internal Book? SearchById(Guid bookId, List<Book> books)
+    internal Result<Book> SearchById(Guid bookId, List<Book> books)
     {
-        var findedBook = books?.Find(book => book.BookId == bookId);
-        return findedBook;
+        var findedBook = books.Find(book => book.BookId == bookId);
+        if (findedBook == null)
+        {
+            return Result<Book>.Failure("no book was found");
+        }
+        return Result<Book>.Success(findedBook);
     }
 
-    internal Book? GetBookById(Guid bookId)
+    internal Result<Book> GetBookById(Guid bookId)
     {
         var books = _bookRepository.Read();
         
         var findedBook = SearchById(bookId, books);
+        if (!findedBook.IsSuccess) return Result<Book>.Failure("no book ID was found");
         return findedBook;
     }
 
-    internal IEnumerable GetBookForPublic(SearchType searchType = SearchType.Name, string name = "", string author = "",
+    internal Result<IEnumerable> GetBookForPublic(SearchType searchType = SearchType.Name, string name = "", string author = "",
         int year = 0, Genre genre = Genre.Fiction)
     {
         var books = _bookRepository.Read();
@@ -85,19 +81,19 @@ public class BookService
         switch(searchType)
         {
             case SearchType.Author: 
-                var startingSearchByAuthor = new SearchingBookForPublic(searchByAuthor); 
-                return startingSearchByAuthor.Search(author);
+                var startingSearchByAuthor = new SearchingBookForPublic(searchByAuthor);
+                return Result<IEnumerable>.Success(startingSearchByAuthor.Search(author));
             case SearchType.Name:
-                var startingSearchByName = new SearchingBookForPublic(searchByName); 
-                return startingSearchByName.Search(name);
+                var startingSearchByName = new SearchingBookForPublic(searchByName);
+                return Result<IEnumerable>.Success(startingSearchByName.Search(name));
             case SearchType.Year: 
-                var startingSearchByYear = new SearchingBookForPublic(searchByYear); 
-                return startingSearchByYear.Search(year); 
+                var startingSearchByYear = new SearchingBookForPublic(searchByYear);
+                return Result<IEnumerable>.Success(startingSearchByYear.Search(year));
             case SearchType.Genre:
                 var startingSearchByGenre = new SearchingBookForPublic(searchByGenre);
-                return startingSearchByGenre.Search(genre);
+                return Result<IEnumerable>.Success(startingSearchByGenre.Search(genre));
         }
-        return Enumerable.Empty<Book>();
+        return Result<IEnumerable>.Failure("failure in getting object");
     }
     
     internal void PrintoutBooks(IEnumerable<Book> books)//IEnumerable<Book> books

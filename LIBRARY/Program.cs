@@ -99,20 +99,34 @@ namespace LIBRARY
          BookServiceClass.PrintoutBooks(books);
 
          var SqlBookRepositoryClass = new SqlBookRepository();
-         var book = new Book("Fyodor Dostoevsky", "Crime and Punishment", 1866, Genre.History);
-         var book1 = new Book("Mikhail Sholokhov", "The Quiet Don", 1925, Genre.History);
-         Console.WriteLine(book.Name);
+
+         var result = BookServiceClass.GetBookForPublic(SearchType.Author, author: "Lev Tolstoy");
+         Console.WriteLine("result._value:" + result.Value);
+         //var book = new Book("Fyodor Dostoevsky", "Crime and Punishment", 1866, Genre.History);
+         //var book1 = new Book("Mikhail Sholokhov", "The Quiet Don", 1925, Genre.History);
+         //Console.WriteLine(book.Name);
          //SqlBookRepositoryClass.Create(book);
          //SqlBookRepositoryClass.Create(book1);
          //SqlBookRepositoryClass.Delete((Guid)54c092dc-1c34-4a80-8648-1d4567312d39);
          //SqlBookRepositoryClass.Delete(Guid.Parse("5a2ee767-ec35-435c-96d0-2431bf331653"));
-         SqlBookRepositoryClass.Update(Guid.Parse("e228522f-1648-4d7a-9e6c-a18a336b7fe6"), "a", UpdateParameter.Name);
+         //SqlBookRepositoryClass.Update(Guid.Parse("e228522f-1648-4d7a-9e6c-a18a336b7fe6"), "a", UpdateParameter.Name);
 
          //SqlBookRepositoryClass.Read();
          //BookServiceClass.GetBookForPublic(name: "Lev Tolstoy");
-         /*ILogger loggerMessages = new ConsoleLogger();
+         ILogger loggerMessages = new ConsoleLogger();
          var loggerForConsole = new Logger(loggerMessages);
-         loggerForConsole.Logging("asdf");*/
+         loggerForConsole.Logging(result.IsSuccess.ToString());
+         
+         var bookss = (IEnumerable<Book>)result.Value; // явное приведение
+         var firstBook = bookss.FirstOrDefault();
+         Console.WriteLine(firstBook?.Author + firstBook?.Name);
+
+         /*foreach (var b in result.Value)
+         {
+            Console.WriteLine(b.);
+         }*/
+         
+         //loggerForConsole.Logging(result._value);
       }
       
 
