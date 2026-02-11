@@ -26,7 +26,6 @@ public class SqlBookRepository : IBookRepository
     public void Delete(Guid bookId)
     {
         var context = new MyDbContext();
-        Console.WriteLine("bookId:" + bookId + ":" + bookId.GetType() + ":" + bookId  );
         var book = new Book { BookId = bookId };
         context.Book.Remove(book);
         context.SaveChanges();
@@ -37,25 +36,30 @@ public class SqlBookRepository : IBookRepository
     {
         var context = new MyDbContext();
         var book = new Book { BookId = bookId };
+
         var bookToUpdate = context.Book.First(book => book.BookId == bookId);
-        
+
         
         ILogger loggerMessages = new ConsoleLogger();
         var loggerForConsole = new Logger(loggerMessages);
         loggerForConsole.Logging(book?.BookId + " " + book?.Name + " " + book?.Author);
-        
+
         switch (updateParameter) //TODO: to add validation
         {
             case UpdateParameter.Name: bookToUpdate.Name = (string)paramToChange;
                 context.SaveChanges();
                 break;
             case UpdateParameter.Year: book.Year = (int)paramToChange;
+                context.SaveChanges();
                 break;
-            case UpdateParameter.Author: ;
+            case UpdateParameter.Author: book.Author = (string)paramToChange;
+                context.SaveChanges();
                 break;
-            case UpdateParameter.BorrowingBook: ;
+            case UpdateParameter.BorrowingBook: book.BorrowDate = (DateTime)paramToChange;
+                context.SaveChanges();
                 break;
-            case UpdateParameter.ReturningBook: ;
+            case UpdateParameter.ReturningBook: book.ReturnDate = (DateTime)paramToChange;
+                context.SaveChanges();
                 break;
         }
     }
