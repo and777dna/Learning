@@ -36,12 +36,8 @@ public class BookService
         return Result<Guid>.Success(result.Value); //id._value;
     }
 
-    internal Result<Guid> SearchByNameToId(string? name, List<Book>? books)
+    internal Result<Guid> SearchByNameToId(string name, List<Book> books)
     {
-        if (name == null || books == null)
-        {
-            return Result<Guid>.Failure("no books or name of book");
-        }
         var findedBook = books.Find(book => book.Name == name);
         if (findedBook == null)
         {

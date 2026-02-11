@@ -4,7 +4,7 @@ namespace LIBRARY.BookFolder;
 
 internal interface IBookRepository
 {
-    public List<Book>? Read();//Non-abstract and non-extern method must declare a body
+    public List<Book> Read();//Non-abstract and non-extern method must declare a body
     //internal void AddToFile(Book book);//Non-public method 'ReadJsonFile' cannot implement method from interface IBookRepository
     internal void Create(Book book);
     //internal void WriteFile(List<Book>? books);//WEWEWEWDFEWRCERC

@@ -12,9 +12,6 @@ public class BorrowingBook
     }
     internal void BorrowBook(Guid bookId, Guid ticketNumber)
     {
-        if (bookId == null) { throw new ArgumentNullException(nameof(bookId)); }
-        
-        
         var readers = ReaderRepository.ReadJsonFile();
         var readerDatabase = new ReaderService(readers);
         

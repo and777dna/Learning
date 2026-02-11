@@ -9,7 +9,7 @@ internal interface ISearch
 }
 internal class ByYear(List<Book> books) : ISearch
 {
-    private List<Book>? _books = books;
+    private List<Book> _books = books;
     public IEnumerable Search(object year)
     {
         return _books?.Where(b => b.Year == (int)year) ?? Enumerable.Empty<Book>();
@@ -27,7 +27,7 @@ internal class ByGenre(List<Book> books) : ISearch
 
 internal class ByAuthor(List<Book> books) : ISearch
 {
-    private List<Book>? _books = books;
+    private List<Book> _books = books;
     public IEnumerable Search(object author)
     {
         return _books?.Where(b => b.Author == (string)author) ?? Enumerable.Empty<Book>();
@@ -36,7 +36,7 @@ internal class ByAuthor(List<Book> books) : ISearch
 
 internal class ByName(List<Book> books) : ISearch
 {
-    private List<Book>? _books = books;
+    private List<Book> _books = books;
     public IEnumerable Search(object name)
     {
         return _books?.Where(b => b.Author == (string)name) ?? Enumerable.Empty<Book>();

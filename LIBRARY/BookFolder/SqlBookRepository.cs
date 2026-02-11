@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace LIBRARY;
 public class SqlBookRepository : IBookRepository
 {
-    public List<Book>? Read()
+    public List<Book> Read()
     {
         var context = new MyDbContext();
         List<Book> books = context.Book.ToList();

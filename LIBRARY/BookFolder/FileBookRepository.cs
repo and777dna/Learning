@@ -9,7 +9,7 @@ internal class FileBookRepository(string path) : IBookRepository
 {
     private string _path = path;
     //TODO: to add stack here? and how then i will access it?
-    public List<Book>? Read()
+    public List<Book> Read()
     {
         var jsonRead = "";
         try
@@ -49,7 +49,7 @@ internal class FileBookRepository(string path) : IBookRepository
     public void Update(Guid bookId,object paramToChange, UpdateParameter updateParameter = UpdateParameter.Name)
     {//get => fix => 
         var books = Read();
-        var findedBookToUpdate = books?.Find(bookDatabase => bookDatabase.BookId == bookId);
+        var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.BookId == bookId);
         switch(updateParameter)//TODO: to add validation
         {
             case UpdateParameter.Name: findedBookToUpdate.Name = (string)paramToChange; break;//TODO: to add type validation to paramToChange
@@ -85,16 +85,16 @@ internal class FileBookRepository(string path) : IBookRepository
             throw new FileNotFoundException();
         }
         
-        var findedBookToDelete = books?.Find(bookDatabase => bookDatabase.BookId == bookId);
+        var findedBookToDelete = books.Find(bookDatabase => bookDatabase.BookId == bookId);
         if (findedBookToDelete == null)
         { 
             throw new ArgumentNullException(nameof(bookId));
         }
-        books?.Remove(findedBookToDelete);
+        books.Remove(findedBookToDelete);
         WriteFile(books);
     }
     
-    public void WriteFile(List<Book>? books)
+    public void WriteFile(List<Book> books)
     {
         var jsonWrite = JsonConvert.SerializeObject(books, Formatting.Indented);
         File.WriteAllText(_path, jsonWrite);

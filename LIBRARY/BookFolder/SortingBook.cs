@@ -27,7 +27,6 @@ internal class SortByGenreStatistics(List<Book> books) : ISort
                          Count = group.Count()
                      }).OrderBy(x => x.Genre))
         {   
-            
             Console.WriteLine("{0} {1}", book.Genre, book.Count);
         }
 
