@@ -1,4 +1,4 @@
-namespace LIBRARY.BookFolder;
+namespace LIBRARY.Logging;
 
 public class Logger(ILogger logger)
 {
@@ -6,6 +6,6 @@ public class Logger(ILogger logger)
 
     public void Logging(string logMessage)
     {
-        logger.Log(logMessage);
+        _logger.Log(logMessage);
     }
 }

@@ -1,4 +1,4 @@
-namespace LIBRARY.BookFolder;
+namespace LIBRARY.Logging;
 
 public interface ILogger
 {

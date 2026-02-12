@@ -1,3 +1,5 @@
+using LIBRARY.Logging;
+
 namespace LIBRARY;
 
 internal interface ISort
@@ -27,7 +29,9 @@ internal class SortByGenreStatistics(List<Book> books) : ISort
                          Count = group.Count()
                      }).OrderBy(x => x.Genre))
         {   
-            Console.WriteLine("{0} {1}", book.Genre, book.Count);
+            ILogger loggerMessages = new InfoLogger();
+            var infoLogger = new Logger(loggerMessages);
+            infoLogger.Logging(book.Genre.ToString() + book.Count);
         }
 
         return null;
@@ -47,7 +51,9 @@ internal class FindTheMostPopularByGenre(List<Book> books) : ISort
                 Count = group.Count()
             }).OrderByDescending(x => x.Genre).First();
 
-        Console.WriteLine(mostPopularGenre.Genre + " " + mostPopularGenre.Count);
+        ILogger loggerMessages = new InfoLogger();
+        var infoLogger = new Logger(loggerMessages);
+        infoLogger.Logging(mostPopularGenre.Genre.ToString() + " " + mostPopularGenre.Count);
         return null;
     }
 }

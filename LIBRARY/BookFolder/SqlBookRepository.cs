@@ -1,13 +1,16 @@
 using LIBRARY.BookFolder;
 using LIBRARY.db;
 using LIBRARY.Enums;
+using LIBRARY.Logging;
 using Microsoft.EntityFrameworkCore;
 
 namespace LIBRARY;
-public class SqlBookRepository : IBookRepository
+public class SqlBookRepository(Logger logger) : IBookRepository
 {
+    Logger _logger = logger;
     public List<Book> Read()
     {
+        _logger.Logging("fds");//TODO: to make 7 kinds of logging
         var context = new MyDbContext();
         List<Book> books = context.Book.ToList();
         return books;
@@ -31,36 +34,71 @@ public class SqlBookRepository : IBookRepository
         context.SaveChanges();
     }
 
-    
-    public void Update(Guid bookId, object paramToChange, UpdateParameter updateParameter = UpdateParameter.Name)
+    public void UpdateName(Guid bookId,string updatedName)
     {
         var context = new MyDbContext();
-        var book = new Book { BookId = bookId };
-
-        var bookToUpdate = context.Book.First(book => book.BookId == bookId);
-
         
-        ILogger loggerMessages = new ConsoleLogger();
-        var loggerForConsole = new Logger(loggerMessages);
-        loggerForConsole.Logging(book?.BookId + " " + book?.Name + " " + book?.Author);
-
-        switch (updateParameter) //TODO: to add validation
+        var bookToUpdate = context.Book.FirstOrDefault(book => book.BookId == bookId);
+        
+        _logger.Logging(bookToUpdate?.BookId + " " + bookToUpdate?.Name + " " + bookToUpdate?.Author);
+        if (bookToUpdate == null)
         {
-            case UpdateParameter.Name: bookToUpdate.Name = (string)paramToChange;
-                context.SaveChanges();
-                break;
-            case UpdateParameter.Year: book.Year = (int)paramToChange;
-                context.SaveChanges();
-                break;
-            case UpdateParameter.Author: book.Author = (string)paramToChange;
-                context.SaveChanges();
-                break;
-            case UpdateParameter.BorrowingBook: book.BorrowDate = (DateTime)paramToChange;
-                context.SaveChanges();
-                break;
-            case UpdateParameter.ReturningBook: book.ReturnDate = (DateTime)paramToChange;
-                context.SaveChanges();
-                break;
+            
         }
+        bookToUpdate.Name = updatedName;
+        context.SaveChanges();
     }
+    
+    public void UpdateYear(Guid bookId,int updatedYear)
+    {
+        var context = new MyDbContext();
+        
+        var bookToUpdate = context.Book.FirstOrDefault(book => book.BookId == bookId);
+        if (bookToUpdate == null)
+        {
+            
+        }
+        bookToUpdate.Year = updatedYear;
+        context.SaveChanges();
+    }
+    
+    public void UpdateAuthor(Guid bookId,string updatedAuthor)
+    {
+        var context = new MyDbContext();
+        
+        var bookToUpdate = context.Book.FirstOrDefault(book => book.BookId == bookId);
+        if (bookToUpdate == null)
+        {
+            
+        }
+        bookToUpdate.Author = updatedAuthor;
+        context.SaveChanges();
+    }
+    
+    public void UpdateBorrowingBook(Guid bookId,DateTime updatedBorrowDate)
+    {
+        var context = new MyDbContext();
+        
+        var bookToUpdate = context.Book.FirstOrDefault(book => book.BookId == bookId);
+        if (bookToUpdate == null)
+        {
+            
+        }
+        bookToUpdate.BorrowDate = updatedBorrowDate;
+        context.SaveChanges();
+    }
+    
+    public void UpdateReturningBook(Guid bookId,DateTime updatedReturnDate)
+    {
+        var context = new MyDbContext();
+        
+        var bookToUpdate = context.Book.FirstOrDefault(book => book.BookId == bookId);
+        if (bookToUpdate == null)
+        {
+            
+        }
+        bookToUpdate.ReturnDate = updatedReturnDate;
+        context.SaveChanges();
+    }
+    
 }

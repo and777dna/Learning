@@ -1,5 +1,3 @@
-using LIBRARY.Enums;
-
 namespace LIBRARY.BookFolder;
 
 internal interface IBookRepository
@@ -9,5 +7,10 @@ internal interface IBookRepository
     internal void Create(Book book);
     //internal void WriteFile(List<Book>? books);//WEWEWEWDFEWRCERC
     internal void Delete(Guid bookId);
-    internal void Update(Guid bookId, object paramToChange, UpdateParameter updateParameter = UpdateParameter.Name);
+    //internal void Update(Guid bookId, object paramToChange, UpdateParameter updateParameter = UpdateParameter.Name);
+    public void UpdateName(Guid bookId, string updatedName);
+    public void UpdateYear(Guid bookId, int updatedYear);
+    public void UpdateAuthor(Guid bookId, string updatedAuthor);
+    public void UpdateBorrowingBook(Guid bookId, DateTime updatedBorrowDate);
+    public void UpdateReturningBook(Guid bookId, DateTime updatedReturnDate);
 }

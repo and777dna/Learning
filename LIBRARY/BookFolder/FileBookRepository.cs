@@ -19,7 +19,6 @@ internal class FileBookRepository(string path) : IBookRepository
         }
         catch (Exception e)
         {
-            Console.WriteLine("The file could not be read:");
             Console.WriteLine(e.Message);
             throw;
         }
@@ -46,34 +45,43 @@ internal class FileBookRepository(string path) : IBookRepository
         WriteFile(books);
     }
 
-    public void Update(Guid bookId,object paramToChange, UpdateParameter updateParameter = UpdateParameter.Name)
-    {//get => fix => 
+    public void UpdateName(Guid bookId, string updatedName)
+    {
         var books = Read();
-        var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.BookId == bookId);
-        switch(updateParameter)//TODO: to add validation
-        {
-            case UpdateParameter.Name: findedBookToUpdate.Name = (string)paramToChange; break;//TODO: to add type validation to paramToChange
-            case UpdateParameter.Author: findedBookToUpdate.Author = (string)paramToChange; break;
-            case UpdateParameter.Year: findedBookToUpdate.Year = (int)paramToChange; break;
-            case UpdateParameter.BorrowingBook:         //TODO: to create interface here
-                if (findedBookToUpdate.BookIsCheckout)
-                {
-                    throw new ConstraintException("the book is already checkout");
-                }
-                findedBookToUpdate.BorrowingCount += 1;
-                findedBookToUpdate.BookIsCheckout = true;
-                findedBookToUpdate.BorrowDate = (DateTime)paramToChange; Console.WriteLine("returnDate:" + paramToChange.GetType()); 
-                break;
-            case UpdateParameter.ReturningBook:
-                if (findedBookToUpdate.BookIsCheckout == false)
-                {
-                    throw new ConstraintException("the book is not checkout");
-                }
-                findedBookToUpdate.ReturnDate = (DateTime)paramToChange;
-                findedBookToUpdate.BookIsCheckout = false;
-                break;
-            default: throw new ArgumentException("you typed in the wrong argument");
-        }
+        var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.BookId == bookId);//TODO: to add validation
+        findedBookToUpdate.Name = updatedName;
+        WriteFile(books);
+    }
+
+    public void UpdateYear(Guid bookId, int updatedYear)
+    {
+        var books = Read();
+        var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.BookId == bookId);//TODO: to add validation
+        findedBookToUpdate.Year = updatedYear;
+        WriteFile(books);
+    }
+
+    public void UpdateAuthor(Guid bookId, string updatedAuthor)
+    {
+        var books = Read();
+        var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.BookId == bookId);//TODO: to add validation
+        findedBookToUpdate.Author = updatedAuthor;
+        WriteFile(books);
+    }
+
+    public void UpdateBorrowingBook(Guid bookId, DateTime updatedBorrowDate)
+    {
+        var books = Read();
+        var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.BookId == bookId);//TODO: to add validation
+        findedBookToUpdate.BorrowDate = updatedBorrowDate;
+        WriteFile(books);
+    }
+
+    public void UpdateReturningBook(Guid bookId, DateTime updatedReturnDate)
+    {
+        var books = Read();
+        var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.BookId == bookId);//TODO: to add validation
+        findedBookToUpdate.ReturnDate = updatedReturnDate;
         WriteFile(books);
     }
 

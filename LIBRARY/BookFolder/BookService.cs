@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Data;
 using LIBRARY.Enums;
+using LIBRARY.Logging;
 using LIBRARY.Result;
 
 namespace LIBRARY.BookFolder;
 
 public class BookService
 {
+    private ILogger _logger;
     private readonly IBookRepository _bookRepository;
 
-    internal BookService(IBookRepository bookRepository)
+    internal BookService(IBookRepository bookRepository, ILogger logger)
     {
         _bookRepository = bookRepository;
+        _logger = logger;
     }
 
     internal void AddBookToLibrary(Book book)
@@ -29,9 +32,8 @@ public class BookService
         var books = _bookRepository.Read();
         if (books == null)
         {
-            return Result<Guid>.Failure("no file was found");
+            return Result<Guid>.Failure("no file was found");//TODO: to return failure? or log?
         }
-        //var id = SearchByNameToId(name, books);
         var result = SearchByNameToId(name, books);
         return Result<Guid>.Success(result.Value); //id._value;
     }
@@ -94,10 +96,9 @@ public class BookService
     
     internal void PrintoutBooks(IEnumerable<Book> books)//IEnumerable<Book> books
     {
-        var ConsoleLoggerClass = new ConsoleLogger();
         foreach (var book in books)
         {
-            Console.WriteLine("{0} - {1}", book.Name, book.BorrowingCount);
+            _logger.Log(book.Name + book.BorrowingCount);
         }
     }
 }
