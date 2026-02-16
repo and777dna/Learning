@@ -1,5 +1,4 @@
 using LIBRARY.BookFolder;
-using LIBRARY.Enums;
 using LIBRARY.Logging;
 
 namespace LIBRARY;
@@ -17,8 +16,13 @@ public class BorrowingBook
     {
         var readers = ReaderRepository.ReadJsonFile();
         var readerDatabase = new ReaderService(readers);
+
+        string _path = Path.Combine(AppContext.BaseDirectory, "books.json");
+        var BookRepositoryClass = new FileBookRepository(_path);
         
-        _bookRepository.UpdateBorrowingBook(bookId, DateTime.Now);
+        _bookRepository.UpdateField(bookId, DateTime.Now, BookRepositoryClass.UpdateBorrowingBook);
+        
+        
         readerDatabase.UpdateReader(ticketNumber, bookId, true);
     }
    
@@ -48,7 +52,10 @@ public class BorrowingBook
         var readers = ReaderRepository.ReadJsonFile();
         var readerDatabase = new ReaderService(readers);
         
-        _bookRepository.UpdateReturningBook(bookId, DateTime.Now.AddDays(7));
+        string _path = Path.Combine(AppContext.BaseDirectory, "books.json");
+        var BookRepositoryClass = new FileBookRepository(_path);
+        
+        _bookRepository.UpdateField(bookId, DateTime.Now.AddDays(7), BookRepositoryClass.UpdateReturningBook);
         readerDatabase.UpdateReader(ticketNumber,Guid.Empty, false);
     }
 }

@@ -44,7 +44,13 @@ internal class FileBookRepository(string path) : IBookRepository
         }
         WriteFile(books);
     }
-
+    
+    
+    public void UpdateField<TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter, UpdateDelegate<TUpdateParameter> up)
+    {
+        up(bookId, updateParameter);
+    }
+    
     public void UpdateName(Guid bookId, string updatedName)
     {
         var books = Read();

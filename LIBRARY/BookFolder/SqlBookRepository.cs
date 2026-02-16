@@ -33,6 +33,9 @@ public class SqlBookRepository(Logger logger) : IBookRepository
         context.Book.Remove(book);
         context.SaveChanges();
     }
+    public void UpdateField<TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter, UpdateDelegate<TUpdateParameter> up)//UpdateName(Guid bookId, string updatedName)
+    {
+    }
 
     public void UpdateName(Guid bookId,string updatedName)
     {

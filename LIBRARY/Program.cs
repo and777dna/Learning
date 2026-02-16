@@ -35,6 +35,11 @@ namespace LIBRARY
          var firstBook = bookss.FirstOrDefault();
          Console.WriteLine(firstBook?.Author + firstBook?.Name);
 
+         
+         
+         var BookRepositoryClass = new FileBookRepository(_path);
+         var bookId = books[0].BookId;
+         BookRepositoryClass.UpdateField(bookId, "Waar and peace", BookRepositoryClass.UpdateName);
          /*foreach (var b in result.Value)
          {
             Console.WriteLine(b.);
