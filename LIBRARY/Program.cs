@@ -14,7 +14,7 @@ namespace LIBRARY
          
          var loggerForConsole = new Logger(loggerInfoMessages);
 
-         IBookRepository BookOperationsClass = new FileBookRepository(_path);
+         IBookRepository BookOperationsClass = new FileBookRepository(_path, loggerInfoMessages);
          var books = BookOperationsClass.Read();
          var BookServiceClass = new BookService(BookOperationsClass, loggerInfoMessages);
          BookServiceClass.PrintoutBooks(books);
@@ -37,7 +37,7 @@ namespace LIBRARY
 
          
          
-         var BookRepositoryClass = new FileBookRepository(_path);
+         var BookRepositoryClass = new FileBookRepository(_path, loggerInfoMessages);
          var bookId = books[0].BookId;
          BookRepositoryClass.UpdateField(bookId, "Waar and peace", BookRepositoryClass.UpdateName);
          /*foreach (var b in result.Value)

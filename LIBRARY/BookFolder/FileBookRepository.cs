@@ -1,12 +1,12 @@
-using System.Data;
 using LIBRARY.BookFolder;
-using LIBRARY.Enums;
+using LIBRARY.Logging;
 using Newtonsoft.Json;
 
 namespace LIBRARY;
 
-internal class FileBookRepository(string path) : IBookRepository
+internal class FileBookRepository(string path, ILogger logger) : IBookRepository
 {
+    private ILogger _logger = logger;//TODO: to make not .Log() here, but error(), infoLog()
     private string _path = path;
     //TODO: to add stack here? and how then i will access it?
     public List<Book> Read()
@@ -19,7 +19,7 @@ internal class FileBookRepository(string path) : IBookRepository
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            _logger.Log(e.Message);
             throw;
         }
         
@@ -38,7 +38,7 @@ internal class FileBookRepository(string path) : IBookRepository
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            _logger.Log(e.Message);
             throw new ArgumentNullException(nameof(books));
 
         }
@@ -46,9 +46,10 @@ internal class FileBookRepository(string path) : IBookRepository
     }
     
     
-    public void UpdateField<TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter, UpdateDelegate<TUpdateParameter> up)
+    public Result.Result UpdateField<TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter, UpdateDelegate<TUpdateParameter> up)
     {
         up(bookId, updateParameter);
+        return Result.Result.Success();
     }
     
     public void UpdateName(Guid bookId, string updatedName)
@@ -91,22 +92,24 @@ internal class FileBookRepository(string path) : IBookRepository
         WriteFile(books);
     }
 
-    public void Delete(Guid bookId)
+    public Result.Result Delete(Guid bookId)
     {
         var books = Read();
         if (books == null)
         {
-            throw new FileNotFoundException();
+            return Result.Result.Failure("books are not inside cache");
         }
         
         var findedBookToDelete = books.Find(bookDatabase => bookDatabase.BookId == bookId);
         if (findedBookToDelete == null)
-        { 
-            throw new ArgumentNullException(nameof(bookId));
+        {
+            return Result.Result.Failure("book is not founded");
         }
         books.Remove(findedBookToDelete);
         WriteFile(books);
+        return Result.Result.Success();
     }
+    
     
     public void WriteFile(List<Book> books)
     {

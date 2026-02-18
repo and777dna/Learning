@@ -18,7 +18,7 @@ public class BorrowingBook
         var readerDatabase = new ReaderService(readers);
 
         string _path = Path.Combine(AppContext.BaseDirectory, "books.json");
-        var BookRepositoryClass = new FileBookRepository(_path);
+        var BookRepositoryClass = new FileBookRepository(_path, _logger);
         
         _bookRepository.UpdateField(bookId, DateTime.Now, BookRepositoryClass.UpdateBorrowingBook);
         
@@ -26,12 +26,12 @@ public class BorrowingBook
         readerDatabase.UpdateReader(ticketNumber, bookId, true);
     }
    
-    public static void DisplayByBorrowingPopularity()//TODO: to make DI here
+    public void DisplayByBorrowingPopularity()//TODO: to make DI here
     {
         string _path = Path.Combine(AppContext.BaseDirectory, "books.json");
         //var books = BookRepository.ReadJsonFile();
 
-        IBookRepository BookOperationsClass = new FileBookRepository(_path);
+        IBookRepository BookOperationsClass = new FileBookRepository(_path, _logger);
         var books = BookOperationsClass.Read();
         if(books == null){throw new FileNotFoundException();}
 
@@ -53,7 +53,7 @@ public class BorrowingBook
         var readerDatabase = new ReaderService(readers);
         
         string _path = Path.Combine(AppContext.BaseDirectory, "books.json");
-        var BookRepositoryClass = new FileBookRepository(_path);
+        var BookRepositoryClass = new FileBookRepository(_path, _logger);
         
         _bookRepository.UpdateField(bookId, DateTime.Now.AddDays(7), BookRepositoryClass.UpdateReturningBook);
         readerDatabase.UpdateReader(ticketNumber,Guid.Empty, false);
