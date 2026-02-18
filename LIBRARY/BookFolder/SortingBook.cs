@@ -53,7 +53,64 @@ internal class FindTheMostPopularByGenre(List<Book> books) : ISort
 
         ILogger loggerMessages = new InfoLogger();
         var infoLogger = new Logger(loggerMessages);
-        infoLogger.Logging(mostPopularGenre.Genre.ToString() + " " + mostPopularGenre.Count);
+        infoLogger.Logging(mostPopularGenre.Genre + " " + mostPopularGenre.Count);
+        return null;
+    }
+}
+
+
+internal class FindTopOldestBooks(List<Book> books) : ISort
+{
+    public List<Book> _books = books;
+
+    public IEnumerable<Book> Sort()
+    {
+        var sortedBookByYear = _books.OrderByDescending(book => book.Year).Take(3);
+        return sortedBookByYear;
+    }
+}
+
+internal class FindBooksByAuthor(List<Book> books) : ISort
+{
+    public List<Book> _books = books;
+
+    public IEnumerable<Book> Sort()
+    {
+        _books.GroupBy(book => book.Author).Select(group => new {Author = group.Key, Count = group.Count()});
+        
+        return null;
+    }
+}
+
+internal class FindMostProductiveAuthor(List<Book> books) : ISort
+{
+    public List<Book> _books = books;
+
+    public IEnumerable<Book> Sort()
+    {
+        ILogger loggerMessages = new InfoLogger();
+        var infoLogger = new Logger(loggerMessages);
+        
+        var mostProductiveAuthor = _books.GroupBy(book => book.Author)
+            .Select(group => new {Author = group.Key, Count = group.Count()})
+            .OrderByDescending(group => group.Count).First();
+        infoLogger.Logging(mostProductiveAuthor.Author + " " + mostProductiveAuthor.Count);
+        return null;
+    }
+}
+
+internal class AveragePublicationYear(List<Book> books) : ISort
+{
+    public List<Book> _books = books;
+    
+
+    public IEnumerable<Book> Sort()
+    {
+        ILogger loggerMessages = new InfoLogger();
+        var infoLogger = new Logger(loggerMessages);
+        var avgYear = _books.Average(book => book.Year);
+        
+        infoLogger.Logging(avgYear.ToString());
         return null;
     }
 }

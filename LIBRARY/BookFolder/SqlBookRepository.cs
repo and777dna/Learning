@@ -26,12 +26,17 @@ public class SqlBookRepository(Logger logger) : IBookRepository
         context.SaveChanges();
     }
 
-    public void Delete(Guid bookId)
+    public Result.Result Delete(Guid bookId)
     {
         var context = new MyDbContext();
         var book = new Book { BookId = bookId };
         context.Book.Remove(book);
         context.SaveChanges();
+        return Result.Result.Success();
+    }
+    public Result.Result UpdateField<TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter, UpdateDelegate<TUpdateParameter> up)//UpdateName(Guid bookId, string updatedName)
+    {
+        return Result.Result.Success();
     }
 
     public void UpdateName(Guid bookId,string updatedName)
