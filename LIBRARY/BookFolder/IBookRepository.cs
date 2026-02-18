@@ -1,5 +1,3 @@
-using LIBRARY.Result;
-
 namespace LIBRARY.BookFolder;
 
 public delegate void UpdateDelegate<TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter);
