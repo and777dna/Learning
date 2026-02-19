@@ -31,8 +31,8 @@ public class BorrowingBook
         string _path = Path.Combine(AppContext.BaseDirectory, "books.json");
         //var books = BookRepository.ReadJsonFile();
 
-        IBookRepository BookOperationsClass = new FileBookRepository(_path, _logger);
-        var books = BookOperationsClass.Read();
+        var BookOperationsClass = new FileBookRepository(_path, _logger);
+        var books = BookOperationsClass.Books;
         if(books == null){throw new FileNotFoundException();}
 
         ISort sortByPopularity = new SortByPopularity(books);

@@ -4,11 +4,21 @@ using Newtonsoft.Json;
 
 namespace LIBRARY;
 
-internal class FileBookRepository(string path, ILogger logger) : IBookRepository
+internal class FileBookRepository : IBookRepository
 {
-    private ILogger _logger = logger;//TODO: to make not .Log() here, but error(), infoLog()
-    private string _path = path;
+    private ILogger _logger;
+    private string _path;
     //TODO: to add stack here? and how then i will access it?
+    public List<Book> Books { private set; get; }//TODO: to understand why when i put public, than i cant read it
+    
+
+    internal FileBookRepository(string path, ILogger logger)
+    {
+        _logger = logger;
+        _path = path;
+        Books = Read();
+    }
+    
     public List<Book> Read()
     {
         var jsonRead = "";
@@ -30,7 +40,7 @@ internal class FileBookRepository(string path, ILogger logger) : IBookRepository
 
     public void Create(Book book)
     {
-        var books = Read();
+        var books = Books;
         
         try
         {
@@ -54,7 +64,7 @@ internal class FileBookRepository(string path, ILogger logger) : IBookRepository
     
     public void UpdateName(Guid bookId, string updatedName)
     {
-        var books = Read();
+        var books = Books;
         var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.BookId == bookId);//TODO: to add validation
         findedBookToUpdate.Name = updatedName;
         WriteFile(books);
@@ -62,7 +72,7 @@ internal class FileBookRepository(string path, ILogger logger) : IBookRepository
 
     public void UpdateYear(Guid bookId, int updatedYear)
     {
-        var books = Read();
+        var books = Books;
         var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.BookId == bookId);//TODO: to add validation
         findedBookToUpdate.Year = updatedYear;
         WriteFile(books);
@@ -70,7 +80,7 @@ internal class FileBookRepository(string path, ILogger logger) : IBookRepository
 
     public void UpdateAuthor(Guid bookId, string updatedAuthor)
     {
-        var books = Read();
+        var books = Books;
         var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.BookId == bookId);//TODO: to add validation
         findedBookToUpdate.Author = updatedAuthor;
         WriteFile(books);
@@ -78,7 +88,7 @@ internal class FileBookRepository(string path, ILogger logger) : IBookRepository
 
     public void UpdateBorrowingBook(Guid bookId, DateTime updatedBorrowDate)
     {
-        var books = Read();
+        var books = Books;
         var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.BookId == bookId);//TODO: to add validation
         findedBookToUpdate.BorrowDate = updatedBorrowDate;
         WriteFile(books);
@@ -86,7 +96,7 @@ internal class FileBookRepository(string path, ILogger logger) : IBookRepository
 
     public void UpdateReturningBook(Guid bookId, DateTime updatedReturnDate)
     {
-        var books = Read();
+        var books = Books;
         var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.BookId == bookId);//TODO: to add validation
         findedBookToUpdate.ReturnDate = updatedReturnDate;
         WriteFile(books);
@@ -94,7 +104,7 @@ internal class FileBookRepository(string path, ILogger logger) : IBookRepository
 
     public Result.Result Delete(Guid bookId)
     {
-        var books = Read();
+        var books = Books;
         if (books == null)
         {
             return Result.Result.Failure("books are not inside cache");

@@ -10,11 +10,13 @@ namespace LIBRARY
       {
          string _path = Path.Combine(AppContext.BaseDirectory, "books.json");
          ILogger logger = new Logger();
-        
+         
 
-         IBookRepository BookOperationsClass = new FileBookRepository(_path, logger);
-         var books = BookOperationsClass.Read();
-         var BookServiceClass = new BookService(BookOperationsClass, logger);
+         var fileBookRepositoryClass = new FileBookRepository(_path, logger);
+         
+         var books = fileBookRepositoryClass.Books;
+         
+         var BookServiceClass = new BookService(fileBookRepositoryClass, logger);
          BookServiceClass.PrintoutBooks(books);
          
          
