@@ -19,7 +19,7 @@ internal class FileBookRepository(string path, ILogger logger) : IBookRepository
         }
         catch (Exception e)
         {
-            _logger.Log(e.Message);
+            _logger.ErrorLogger(e.Message);
             throw;
         }
         
@@ -38,7 +38,7 @@ internal class FileBookRepository(string path, ILogger logger) : IBookRepository
         }
         catch (Exception e)
         {
-            _logger.Log(e.Message);
+            _logger.ErrorLogger(e.Message);
             throw new ArgumentNullException(nameof(books));
 
         }

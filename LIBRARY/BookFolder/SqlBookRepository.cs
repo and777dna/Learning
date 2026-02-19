@@ -5,12 +5,11 @@ using LIBRARY.Logging;
 using Microsoft.EntityFrameworkCore;
 
 namespace LIBRARY;
-public class SqlBookRepository(Logger logger) : IBookRepository
+public class SqlBookRepository(ILogger logger) : IBookRepository
 {
-    Logger _logger = logger;
+    private ILogger _logger = logger;
     public List<Book> Read()
     {
-        _logger.Logging("fds");//TODO: to make 7 kinds of logging
         var context = new MyDbContext();
         List<Book> books = context.Book.ToList();
         return books;
@@ -45,7 +44,7 @@ public class SqlBookRepository(Logger logger) : IBookRepository
         
         var bookToUpdate = context.Book.FirstOrDefault(book => book.BookId == bookId);
         
-        _logger.Logging(bookToUpdate?.BookId + " " + bookToUpdate?.Name + " " + bookToUpdate?.Author);
+        _logger.DebugLogger(bookToUpdate?.BookId + " " + bookToUpdate?.Name + " " + bookToUpdate?.Author);
         if (bookToUpdate == null)
         {
             

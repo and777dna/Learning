@@ -40,10 +40,10 @@ public class BorrowingBook
         var sortClass = new SortingBook(sortByPopularity);
         var sortedByPopularity = sortClass.Sort();
         
-        ILogger loggerInfoMessages = new InfoLogger();
+        //ILogger loggerInfoMessages = new InfoLogger();
+        ILogger logger = new Logger();
         
-        
-        var BookServiceClass = new BookService(BookOperationsClass, loggerInfoMessages);
+        var BookServiceClass = new BookService(BookOperationsClass, logger);
         BookServiceClass.PrintoutBooks(sortedByPopularity);
     }
     
