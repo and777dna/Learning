@@ -3,18 +3,29 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LIBRARY;
 
+
 [Table("reader")]
 public class Reader
 {
     [Column("name")]
-    public readonly string Name;
+    public string Name { get; private set; }
     [Key]
     public readonly Guid TicketNumber;
     [Column("phoneNumber")]
-    public readonly int PhoneNumber;
+    public int PhoneNumber { get; private set; }
 
-    public List<Guid>? _borrowedBooks { get; } = new List<Guid>(3);
-    public List<Guid>? _historyOfCheckOuts { get; } = new List<Guid>();
+    public List<Guid>? _borrowedBooks { get; } = new List<Guid>(3);//TODO: to fix on IReadOnlyList
+    public List<Guid>? _historyOfCheckOuts { get; } = new List<Guid>();//TODO: to fix on IReadOnlyList
+
+    public void ChangingName(string updatedName)
+    {
+        Name = updatedName;
+    }
+    
+    public void ChangingPhoneNumber(int updatedPhoneNumber)
+    {
+        PhoneNumber = updatedPhoneNumber;
+    }
     
     //CurrenCheckoutBook
     /*public Guid CurrentCheckOutBook
@@ -22,6 +33,7 @@ public class Reader
         get => _currenCheckOutBook;
         set => _currenCheckOutBook = value;
     }*/
+    public Reader(){}
 
     public Reader(string name, int phoneNumber, Guid ticketNumber)
     {
