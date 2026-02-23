@@ -11,7 +11,7 @@ namespace LIBRARY
          string _path = Path.Combine(AppContext.BaseDirectory, "books.json");
          ILogger logger = new Logger();
          
-
+         
          var fileBookRepositoryClass = new FileBookRepository(_path, logger);
          
          var books = fileBookRepositoryClass.Books;
@@ -39,12 +39,16 @@ namespace LIBRARY
          
          var BookRepositoryClass = new FileBookRepository(_path, logger);
          var bookId = books[0].BookId;
-         BookRepositoryClass.UpdateField(bookId, "Waar and peace", BookRepositoryClass.UpdateName);
+         //BookRepositoryClass.UpdateField(bookId, "Waar and peace", BookRepositoryClass.UpdateName);
+         
+         var operation = BookRepositoryClass.SelectOperation<string>(UpdateType.UpdateName);
+         operation(bookId, "War and peace");
+         //private Updatefield<string> operation = SelectOperation<string>(UpdateType.UpdateName);
          /*foreach (var b in result.Value)
          {
             Console.WriteLine(b.);
          }*/
-         
+
          //loggerForConsole.Logging(result._value);
       }
       

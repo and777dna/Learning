@@ -1,8 +1,10 @@
 using LIBRARY.BookFolder;
+using LIBRARY.Enums;
 using LIBRARY.Logging;
 using Newtonsoft.Json;
 
 namespace LIBRARY;
+
 
 internal class FileBookRepository : IBookRepository
 {
@@ -54,6 +56,63 @@ internal class FileBookRepository : IBookRepository
         }
         WriteFile(books);
     }
+    
+    /*
+ Operation operation = SelectOperation(OperationType.Add);
+   Console.WriteLine(operation(10, 4));    // 14
+
+   Operation SelectOperation(OperationType opType)
+   {
+       switch (opType)
+       {
+           case OperationType.Add: return Add;
+           case OperationType.Subtract: return Subtract;
+           default: return Multiply;
+       }
+   }
+    */
+    /*public delegate Result.Result Updatefield<TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter);
+
+    Updatefield<TUpdateParameter> SelectUpdate<TUpdateParameter>(UpdateType upType)
+    {
+        switch (upType)
+        {
+            case UpdateType.UpdateAuthor: return Updateauthor<TUpdateParameter>;
+        }
+
+        return Updateauthor;
+    }
+
+    Updatefield<string> operation = SelectUpdate<string>(UpdateType.UpdateAuthor);
+    
+    public Result.Result Updateauthor<TUpdateParameter>(Guid bookId, TUpdateParameter updatedAuthor)
+    {
+        var books = Books;
+        var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.BookId == bookId);//TODO: to add validation
+        findedBookToUpdate.Author = updatedAuthor.ToString();
+        WriteFile(books);
+    }*/
+    
+    public delegate Result.Result Updatefield<TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter);
+    public delegate Result.Result Updateffield<T, TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter);
+    
+
+    public Updatefield<TUpdateParameter> SelectOperation<TUpdateParameter>(UpdateType upType)
+    {
+        return Updatename;
+    }
+    
+    public Result.Result Updatename<TUpdateParameter>(Guid bookId, TUpdateParameter updatedName)
+    {
+        var books = Books;
+        var findedBookToUpdate = books.Find(bookDatabase => bookDatabase.BookId == bookId);//TODO: to add validation
+        findedBookToUpdate.Name = updatedName.ToString();
+        WriteFile(books);
+        return Result.Result.Success();
+    }
+    
+    
+    
     
     
     public Result.Result UpdateField<TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter, UpdateDelegate<TUpdateParameter> up)
