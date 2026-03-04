@@ -1,49 +1,25 @@
 namespace LIBRARY.Logging;
 
-
-/*public class Loggers : ILogger
+public class Logger : ILogger
 {
-    public void LogInformation(string logMessage)
+    public void InfoLogger(string logMessage)
     {
         Console.WriteLine(logMessage);
     }
-}*/
 
-public class DebugLogger : ILogger
-{
-    public void Log(string logMessage)
+    public void DebugLogger(string logMessage)
     {
         Console.WriteLine(logMessage);
     }
-}
-
-public class InfoLogger : ILogger
-{
-    public void Log(string logMessage)
+    public void WarnLogger(string logMessage)
     {
         Console.WriteLine(logMessage);
     }
-}
-
-public class WarnLogger : ILogger
-{
-    public void Log(string logMessage)
+    public void ErrorLogger(string logMessage)
     {
         Console.WriteLine(logMessage);
     }
-}
-
-public class ErrorLogger : ILogger
-{
-    public void Log(string logMessage)
-    {
-        Console.WriteLine(logMessage);
-    }
-}
-
-public class FatalLogger : ILogger
-{
-    public void Log(string logMessage)
+    public void FatalLogger(string logMessage)
     {
         Console.WriteLine(logMessage);
     }

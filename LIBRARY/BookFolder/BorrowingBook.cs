@@ -31,8 +31,8 @@ public class BorrowingBook
         string _path = Path.Combine(AppContext.BaseDirectory, "books.json");
         //var books = BookRepository.ReadJsonFile();
 
-        IBookRepository BookOperationsClass = new FileBookRepository(_path, _logger);
-        var books = BookOperationsClass.Read();
+        var BookOperationsClass = new FileBookRepository(_path, _logger);
+        var books = BookOperationsClass.Books;
         if(books == null){throw new FileNotFoundException();}
 
         ISort sortByPopularity = new SortByPopularity(books);
@@ -40,10 +40,10 @@ public class BorrowingBook
         var sortClass = new SortingBook(sortByPopularity);
         var sortedByPopularity = sortClass.Sort();
         
-        ILogger loggerInfoMessages = new InfoLogger();
+        //ILogger loggerInfoMessages = new InfoLogger();
+        ILogger logger = new Logger();
         
-        
-        var BookServiceClass = new BookService(BookOperationsClass, loggerInfoMessages);
+        var BookServiceClass = new BookService(BookOperationsClass, logger);
         BookServiceClass.PrintoutBooks(sortedByPopularity);
     }
     

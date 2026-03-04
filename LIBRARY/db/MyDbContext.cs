@@ -5,7 +5,7 @@ namespace LIBRARY.db;
 public class MyDbContext : DbContext
 {
     public DbSet<Book> Book { get; set; }
-    //public DbSet<Reader>? Reader { get; set; }
+    public DbSet<Reader> Reader { get; set; }
     
     /*public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
     {

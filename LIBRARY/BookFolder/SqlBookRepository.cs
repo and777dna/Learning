@@ -1,109 +1,110 @@
 using LIBRARY.BookFolder;
 using LIBRARY.db;
-using LIBRARY.Enums;
 using LIBRARY.Logging;
-using Microsoft.EntityFrameworkCore;
 
 namespace LIBRARY;
-public class SqlBookRepository(Logger logger) : IBookRepository
+public class SqlBookRepository : IBookRepository
 {
-    Logger _logger = logger;
+    private ILogger _logger;
+    private MyDbContext _context;
+
+    public SqlBookRepository(ILogger logger)
+    {
+        _logger = logger;
+        _context = new MyDbContext();
+    }
     public List<Book> Read()
     {
-        _logger.Logging("fds");//TODO: to make 7 kinds of logging
-        var context = new MyDbContext();
-        List<Book> books = context.Book.ToList();
+        List<Book> books = _context.Book.ToList();
         return books;
     }
 
     
     public void Create(Book book)
     {
-        var context = new MyDbContext();//TODO: to make this to constructor
         if (book.BookId == Guid.Empty)
             book.BookId = Guid.NewGuid(); 
-        context.Book.Add(book);
-        context.SaveChanges();
+        _context.Book.Add(book);
+        _context.SaveChanges();
     }
 
     public Result.Result Delete(Guid bookId)
     {
-        var context = new MyDbContext();
-        var book = new Book { BookId = bookId };
-        context.Book.Remove(book);
-        context.SaveChanges();
+        var findedBook = _context.Book.FirstOrDefault(book => book.BookId == bookId);
+        _context.Book.Remove(findedBook);
+        _context.SaveChanges();
         return Result.Result.Success();
     }
+
+
+    private void UpdateBook<TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter, Action<TUpdateParameter, Book> up)
+    {//id, action, generic
+        //() => up(updateParameter);
+        var bookToUpdate = _context.Book.FirstOrDefault(book => book.BookId == bookId);
+        if (bookToUpdate == null)
+        {
+            return;
+        }
+        up(updateParameter, bookToUpdate);
+        _context.SaveChanges();
+        _logger.DebugLogger(bookToUpdate?.BookId + " " + bookToUpdate?.Name + " " + bookToUpdate?.Author);
+
+    }
+    
+    
     public Result.Result UpdateField<TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter, UpdateDelegate<TUpdateParameter> up)//UpdateName(Guid bookId, string updatedName)
     {
+        up(bookId, updateParameter);
         return Result.Result.Success();
     }
 
     public void UpdateName(Guid bookId,string updatedName)
     {
-        var context = new MyDbContext();
-        
-        var bookToUpdate = context.Book.FirstOrDefault(book => book.BookId == bookId);
-        
-        _logger.Logging(bookToUpdate?.BookId + " " + bookToUpdate?.Name + " " + bookToUpdate?.Author);
-        if (bookToUpdate == null)
-        {
-            
-        }
-        bookToUpdate.Name = updatedName;
-        context.SaveChanges();
+        UpdateBook(bookId,updatedName, (u, b) => { b.Name = u; _context.SaveChanges();});
     }
-    
+      
     public void UpdateYear(Guid bookId,int updatedYear)
     {
-        var context = new MyDbContext();
-        
-        var bookToUpdate = context.Book.FirstOrDefault(book => book.BookId == bookId);
+        var bookToUpdate = _context.Book.FirstOrDefault(book => book.BookId == bookId);
         if (bookToUpdate == null)
         {
             
         }
         bookToUpdate.Year = updatedYear;
-        context.SaveChanges();
+        _context.SaveChanges();
     }
     
     public void UpdateAuthor(Guid bookId,string updatedAuthor)
     {
-        var context = new MyDbContext();
-        
-        var bookToUpdate = context.Book.FirstOrDefault(book => book.BookId == bookId);
+        var bookToUpdate = _context.Book.FirstOrDefault(book => book.BookId == bookId);
         if (bookToUpdate == null)
         {
             
         }
         bookToUpdate.Author = updatedAuthor;
-        context.SaveChanges();
+        _context.SaveChanges();
     }
     
     public void UpdateBorrowingBook(Guid bookId,DateTime updatedBorrowDate)
     {
-        var context = new MyDbContext();
-        
-        var bookToUpdate = context.Book.FirstOrDefault(book => book.BookId == bookId);
+        var bookToUpdate = _context.Book.FirstOrDefault(book => book.BookId == bookId);
         if (bookToUpdate == null)
         {
             
         }
         bookToUpdate.BorrowDate = updatedBorrowDate;
-        context.SaveChanges();
+        _context.SaveChanges();
     }
     
     public void UpdateReturningBook(Guid bookId,DateTime updatedReturnDate)
     {
-        var context = new MyDbContext();
-        
-        var bookToUpdate = context.Book.FirstOrDefault(book => book.BookId == bookId);
+        var bookToUpdate = _context.Book.FirstOrDefault(book => book.BookId == bookId);
         if (bookToUpdate == null)
         {
             
         }
         bookToUpdate.ReturnDate = updatedReturnDate;
-        context.SaveChanges();
+        _context.SaveChanges();
     }
     
 }

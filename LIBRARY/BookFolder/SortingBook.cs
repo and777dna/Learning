@@ -29,9 +29,9 @@ internal class SortByGenreStatistics(List<Book> books) : ISort
                          Count = group.Count()
                      }).OrderBy(x => x.Genre))
         {   
-            ILogger loggerMessages = new InfoLogger();
-            var infoLogger = new Logger(loggerMessages);
-            infoLogger.Logging(book.Genre.ToString() + book.Count);
+            ILogger logger = new Logger();
+            
+            logger.InfoLogger(book.Genre.ToString() + book.Count);
         }
 
         return null;
@@ -51,9 +51,9 @@ internal class FindTheMostPopularByGenre(List<Book> books) : ISort
                 Count = group.Count()
             }).OrderByDescending(x => x.Genre).First();
 
-        ILogger loggerMessages = new InfoLogger();
-        var infoLogger = new Logger(loggerMessages);
-        infoLogger.Logging(mostPopularGenre.Genre + " " + mostPopularGenre.Count);
+        ILogger logger = new Logger();
+            
+        logger.InfoLogger(mostPopularGenre.Genre + " " + mostPopularGenre.Count);
         return null;
     }
 }
@@ -88,13 +88,12 @@ internal class FindMostProductiveAuthor(List<Book> books) : ISort
 
     public IEnumerable<Book> Sort()
     {
-        ILogger loggerMessages = new InfoLogger();
-        var infoLogger = new Logger(loggerMessages);
+        ILogger logger = new Logger();
         
         var mostProductiveAuthor = _books.GroupBy(book => book.Author)
             .Select(group => new {Author = group.Key, Count = group.Count()})
             .OrderByDescending(group => group.Count).First();
-        infoLogger.Logging(mostProductiveAuthor.Author + " " + mostProductiveAuthor.Count);
+        logger.InfoLogger(mostProductiveAuthor.Author + " " + mostProductiveAuthor.Count);
         return null;
     }
 }
@@ -106,11 +105,10 @@ internal class AveragePublicationYear(List<Book> books) : ISort
 
     public IEnumerable<Book> Sort()
     {
-        ILogger loggerMessages = new InfoLogger();
-        var infoLogger = new Logger(loggerMessages);
+        ILogger logger = new Logger();
         var avgYear = _books.Average(book => book.Year);
         
-        infoLogger.Logging(avgYear.ToString());
+        logger.InfoLogger(avgYear.ToString());
         return null;
     }
 }

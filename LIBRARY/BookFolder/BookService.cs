@@ -97,7 +97,7 @@ public class BookService
     {
         foreach (var book in books)
         {
-            _logger.Log(book.Name + book.BorrowingCount);
+            _logger.InfoLogger(book.Name + book.BorrowingCount);
         }
     }
 }

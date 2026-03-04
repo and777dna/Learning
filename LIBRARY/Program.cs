@@ -2,6 +2,9 @@
 using LIBRARY.Enums;
 using LIBRARY.Logging;
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace LIBRARY
 {
    internal class Program
@@ -9,18 +12,18 @@ namespace LIBRARY
       public static void Main()
       {
          string _path = Path.Combine(AppContext.BaseDirectory, "books.json");
-         ILogger loggerInfoMessages = new InfoLogger();
-         ILogger loggerDebugMessages = new DebugLogger();
+         ILogger logger = new Logger();
          
-         var loggerForConsole = new Logger(loggerInfoMessages);
 
-         IBookRepository BookOperationsClass = new FileBookRepository(_path, loggerInfoMessages);
-         var books = BookOperationsClass.Read();
-         var BookServiceClass = new BookService(BookOperationsClass, loggerInfoMessages);
+         var fileBookRepositoryClass = new FileBookRepository(_path, logger);
+         
+         var books = fileBookRepositoryClass.Books;
+         
+         var BookServiceClass = new BookService(fileBookRepositoryClass, logger);
          BookServiceClass.PrintoutBooks(books);
          
          
-         var SqlBookRepositoryClass = new SqlBookRepository(loggerForConsole);
+         var SqlBookRepositoryClass = new SqlBookRepository(logger);
 
          var result = BookServiceClass.GetBookForPublic(SearchType.Author, author: "Lev Tolstoy");
          Console.WriteLine("result._value:" + result.Value);
@@ -28,7 +31,7 @@ namespace LIBRARY
          //SqlBookRepositoryClass.Read();
          //BookServiceClass.GetBookForPublic(name: "Lev Tolstoy");
          
-         loggerForConsole.Logging(result.IsSuccess.ToString());
+         logger.DebugLogger(result.IsSuccess.ToString());
 
          
          var bookss = (IEnumerable<Book>)result.Value; // явное приведение
@@ -37,7 +40,7 @@ namespace LIBRARY
 
          
          
-         var BookRepositoryClass = new FileBookRepository(_path, loggerInfoMessages);
+         var BookRepositoryClass = new FileBookRepository(_path, logger);
          var bookId = books[0].BookId;
          BookRepositoryClass.UpdateField(bookId, "Waar and peace", BookRepositoryClass.UpdateName);
          /*foreach (var b in result.Value)
