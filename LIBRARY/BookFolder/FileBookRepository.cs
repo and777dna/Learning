@@ -56,6 +56,8 @@ internal class FileBookRepository : IBookRepository
     }
     
     
+    
+    
     public Result.Result UpdateField<TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter, UpdateDelegate<TUpdateParameter> up)
     {
         up(bookId, updateParameter);

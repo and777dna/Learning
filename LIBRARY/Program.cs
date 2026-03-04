@@ -2,6 +2,9 @@
 using LIBRARY.Enums;
 using LIBRARY.Logging;
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace LIBRARY
 {
    internal class Program

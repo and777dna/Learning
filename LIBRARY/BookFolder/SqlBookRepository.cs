@@ -35,25 +35,34 @@ public class SqlBookRepository : IBookRepository
         _context.SaveChanges();
         return Result.Result.Success();
     }
+
+
+    private void UpdateBook<TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter, Action<TUpdateParameter, Book> up)
+    {//id, action, generic
+        //() => up(updateParameter);
+        var bookToUpdate = _context.Book.FirstOrDefault(book => book.BookId == bookId);
+        if (bookToUpdate == null)
+        {
+            return;
+        }
+        up(updateParameter, bookToUpdate);
+        _context.SaveChanges();
+        _logger.DebugLogger(bookToUpdate?.BookId + " " + bookToUpdate?.Name + " " + bookToUpdate?.Author);
+
+    }
+    
+    
     public Result.Result UpdateField<TUpdateParameter>(Guid bookId, TUpdateParameter updateParameter, UpdateDelegate<TUpdateParameter> up)//UpdateName(Guid bookId, string updatedName)
     {
+        up(bookId, updateParameter);
         return Result.Result.Success();
     }
 
     public void UpdateName(Guid bookId,string updatedName)
     {
-        
-        var bookToUpdate = _context.Book.FirstOrDefault(book => book.BookId == bookId);
-        
-        _logger.DebugLogger(bookToUpdate?.BookId + " " + bookToUpdate?.Name + " " + bookToUpdate?.Author);
-        if (bookToUpdate == null)
-        {
-            
-        }
-        bookToUpdate.Name = updatedName;
-        _context.SaveChanges();
+        UpdateBook(bookId,updatedName, (u, b) => { b.Name = u; _context.SaveChanges();});
     }
-    
+      
     public void UpdateYear(Guid bookId,int updatedYear)
     {
         var bookToUpdate = _context.Book.FirstOrDefault(book => book.BookId == bookId);
